@@ -11,7 +11,7 @@ import java.io.IOException;
 public class UpdateUserServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    } 
+    }
 }
