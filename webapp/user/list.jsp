@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="next.model.*" %>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -78,16 +80,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${users}" var="user" varStatus="status">
+                <%
+                Collection<User> users = (Collection<User>) request.getAttribute("users");
+                for (User user : users) {
+                %>
+
                     <tr>
-                        <th scope="row">${status.count}</th>
-                        <td>${user.userId}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td><a href="#" class="btn btn-success" role="button">수정</a>
+                        <td><%= user.getUserId() %></td>
+                        <td><%= user.getName() %></td>
+                        <td><%= user.getEmail() %></td>
+                        <td><a href="user/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
-                </c:forEach>
+                <%
+                }
+                %>
                 </tbody>
             </table>
         </div>
