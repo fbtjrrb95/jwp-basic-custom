@@ -2,6 +2,7 @@ package next.web;
 
 import core.db.DataBase;
 import next.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,7 @@ public class UpdateUserServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         RequestDispatcher requestDispatcher;
-        if (userId.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(name) || StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
             requestDispatcher = request.getRequestDispatcher("/user/update.jsp");
             requestDispatcher.forward(request, response);
             return;
