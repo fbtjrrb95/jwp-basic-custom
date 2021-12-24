@@ -89,7 +89,7 @@
                         <td><%= user.getUserId() %></td>
                         <td><%= user.getName() %></td>
                         <td><%= user.getEmail() %></td>
-                        <td><a href="user/update" class="btn btn-success" role="button">수정</a>
+                        <td><a href="/user/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
                 <%
