@@ -56,8 +56,7 @@ public class LoginUserServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", userById);
 
-        requestDispatcher = request.getRequestDispatcher("../index.html");
-        requestDispatcher.forward(request, response);
+        response.sendRedirect("/index.html");
 
     }
 }
