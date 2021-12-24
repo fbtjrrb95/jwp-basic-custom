@@ -1,7 +1,8 @@
 # Compiled class file
 *.class
 .idea
-.target
+target
+tomcat.8080
 
 # Log file
 *.log
