@@ -56,7 +56,7 @@ public class LoginUserServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", userById);
 
-        response.sendRedirect("/index.html");
+        response.sendRedirect("/index.jsp");
 
     }
 }
