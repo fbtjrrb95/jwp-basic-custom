@@ -70,7 +70,7 @@
                 <%
                 } else {
                 %>
-                <li><a href="user/login.html" role="button">로그인</a></li>
+                <li><a href="user/login.jsp" role="button">로그인</a></li>
                 <li><a href="user/form.html" role="button">회원가입</a></li>
                 <%
                 }

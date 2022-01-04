@@ -26,6 +26,7 @@ public class LoginUserServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         RequestDispatcher requestDispatcher;
+        // TODO: refactoring code, extract method
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(password)) {
             if (StringUtils.isEmpty(userId)) {
                 log.error("invalid userId");
@@ -33,7 +34,7 @@ public class LoginUserServlet extends HttpServlet {
             if (StringUtils.isEmpty(password)) {
                 log.error("invalid password");
             }
-            requestDispatcher = request.getRequestDispatcher("/user/login.html");
+            requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
             requestDispatcher.forward(request, response);
             return;
         }
@@ -41,14 +42,14 @@ public class LoginUserServlet extends HttpServlet {
         User userById = DataBase.findUserById(userId);
         if (userById == null) {
             log.error("no user by userId, {}", userId);
-            requestDispatcher = request.getRequestDispatcher("/user/login.html");
+            requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
             requestDispatcher.forward(request, response);
             return;
         }
 
         if (!userById.getPassword().equals(password)) {
             log.error("invalid password");
-            requestDispatcher = request.getRequestDispatcher("/user/login.html");
+            requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
             requestDispatcher.forward(request, response);
             return;
         }
