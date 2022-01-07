@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="next.model.*" %>
+
 <!DOCTYPE html>
 <html lang="kr">
 	<head>
@@ -5,22 +9,22 @@
 		<meta charset="utf-8">
 		<title>SLiPP Java Web Programming</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
+		<link href="/css/styles.css" rel="stylesheet">
 	</head>
 	<body>
 <nav class="navbar navbar-fixed-top header">
  	<div class="col-md-12">
         <div class="navbar-header">
 
-            <a href="index.html" class="navbar-brand">SLiPP</a>
+            <a href="index.jsp" class="navbar-brand">SLiPP</a>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
           <i class="glyphicon glyphicon-search"></i>
           </button>
-      
+
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse1">
           <form class="navbar-form pull-left">
@@ -31,7 +35,7 @@
                 </div>
               </div>
           </form>
-          <ul class="nav navbar-nav navbar-right">             
+          <ul class="nav navbar-nav navbar-right">
              <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
                 <ul class="dropdown-menu">
@@ -41,8 +45,8 @@
              </li>
              <li><a href="./user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
            </ul>
-        </div>	
-     </div>	
+        </div>
+     </div>
 </nav>
 <div class="navbar navbar-default" id="subnav">
     <div class="col-md-12">
@@ -56,15 +60,22 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="index.html">Posts</a></li>
-                <li><a href="user/login.html" role="button">로그인</a></li>
-                <li><a href="user/form.html" role="button">회원가입</a></li>
-                <!--
-                <li><a href="#loginModal" role="button" data-toggle="modal">로그인</a></li>
-                <li><a href="#registerModal" role="button" data-toggle="modal">회원가입</a></li>
-                -->
-                <li><a href="#" role="button">로그아웃</a></li>
+                <%
+                User user = (User) session.getAttribute("user");
+                if (user != null) {
+                %>
+                <li class="active"><a href="index.jsp">Posts</a></li>
+                <li><a href="user/logout" role="button">로그아웃</a></li>
                 <li><a href="user/update" role="button">개인정보수정</a></li>
+                <%
+                } else {
+                %>
+                <li><a href="/user/login.jsp" role="button">로그인</a></li>
+                <li><a href="/user/form.html" role="button">회원가입</a></li>
+                <%
+                }
+                %>
+
             </ul>
         </div>
     </div>
@@ -160,7 +171,7 @@
       <div class="modal-footer">
           <div class="col-md-12">
           <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      </div>  
+      </div>
       </div>
   </div>
   </div>
@@ -202,7 +213,7 @@
       <div class="modal-footer">
           <div class="col-md-12">
           <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      </div>  
+      </div>
       </div>
   </div>
   </div>
@@ -210,8 +221,8 @@
 -->
 
 <!-- script references -->
-<script src="js/jquery-2.2.0.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
+<script src="/js/jquery-2.2.0.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/scripts.js"></script>
 	</body>
 </html>
