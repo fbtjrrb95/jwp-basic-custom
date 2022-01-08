@@ -43,7 +43,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="../user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="/user/list"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -60,11 +60,22 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="../index.jsp">Posts</a></li>
-                <li><a href="../user/login.jsp" role="button">로그인</a></li>
-                <li><a href="../user/form.html" role="button">회원가입</a></li>
-                <li><a href="user/logout" role="button">로그아웃</a></li>
-                <li><a href="#" role="button">개인정보수정</a></li>
+                <%
+                Object value = session.getAttribute("user");
+                if (value != null) {
+                %>
+                <li class="active"><a href="index.jsp">Posts</a></li>
+                <li><a href="/user/logout" role="button">로그아웃</a></li>
+                <li><a href="/user/update" role="button">개인정보수정</a></li>
+                <%
+                } else {
+                %>
+                <li><a href="/user/login.jsp" role="button">로그인</a></li>
+                <li><a href="/user/form.html" role="button">회원가입</a></li>
+                <%
+                }
+                %>
+
             </ul>
         </div>
     </div>
@@ -84,7 +95,6 @@
                 Collection<User> users = (Collection<User>) request.getAttribute("users");
                 for (User user : users) {
                 %>
-
                     <tr>
                         <td><%= user.getUserId() %></td>
                         <td><%= user.getName() %></td>
