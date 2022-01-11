@@ -43,7 +43,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="../user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="/user/list"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -65,8 +65,8 @@
                 if (user != null) {
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
-                <li><a href="user/logout" role="button">로그아웃</a></li>
-                <li><a href="user/update" role="button">개인정보수정</a></li>
+                <li><a href="/user/logout" role="button">로그아웃</a></li>
+                <li><a href="/user/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
