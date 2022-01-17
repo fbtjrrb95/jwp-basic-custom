@@ -31,7 +31,7 @@ public class UpdateUserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
@@ -50,6 +50,8 @@ public class UpdateUserServlet extends HttpServlet {
         user.setPassword(password);
 
         DataBase.addUser(user);
+
+        response.sendRedirect("/user/list");
     }
 
 }
