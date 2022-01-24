@@ -12,7 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Objects;
 
 @WebServlet("/user/update")
 public class UpdateUserServlet extends HttpServlet {
@@ -37,7 +39,16 @@ public class UpdateUserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        HttpSession session = request.getSession();
+        User userBySession = (User) session.getAttribute("user");
+
         RequestDispatcher requestDispatcher;
+        if (!Objects.equals(userId, userBySession.getUserId())) {
+            requestDispatcher = request.getRequestDispatcher("/user/update.jsp");
+            requestDispatcher.forward(request, response);
+            return;
+        }
+
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(name) || StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
             requestDispatcher = request.getRequestDispatcher("/user/update.jsp");
             requestDispatcher.forward(request, response);
