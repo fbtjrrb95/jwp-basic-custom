@@ -62,7 +62,7 @@ public class UpdateUserServlet extends HttpServlet {
 
         DataBase.addUser(user);
 
-        response.sendRedirect("/user/list");
+        response.sendRedirect("/users");
     }
 
 }

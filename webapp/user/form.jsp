@@ -43,7 +43,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="/user/list"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="/users"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -83,7 +83,7 @@
 <div class="container" id="main">
    <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/user/create">
+          <form name="question" method="post" action="/users">
               <div class="form-group">
                   <label for="userId">사용자 아이디</label>
                   <input class="form-control" id="userId" name="userId" placeholder="User ID">

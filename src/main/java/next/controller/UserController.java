@@ -1,4 +1,4 @@
-package next.web;
+package next.controller;
 
 import java.io.IOException;
 
@@ -10,18 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import next.model.User;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import core.db.DataBase;
 
-@WebServlet("/user/list")
-public class ListUserServlet extends HttpServlet {
+@WebServlet("/users")
+public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
         Object value = session.getAttribute("user");
-
 
         if (value == null) {
             RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
@@ -32,5 +37,18 @@ public class ListUserServlet extends HttpServlet {
         req.setAttribute("users", DataBase.findAll());
         RequestDispatcher rd = req.getRequestDispatcher("/user/list.jsp");
         rd.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = new User(request.getParameter("userId"), request.getParameter("password"), request.getParameter("name"),
+                request.getParameter("email"));
+        log.debug("user : {}", user);
+        DataBase.addUser(user);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
+
+        response.sendRedirect("/users");
     }
 }
