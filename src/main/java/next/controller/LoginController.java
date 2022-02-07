@@ -1,7 +1,8 @@
-package next.web;
+package next.controller;
 
 import core.db.DataBase;
 import next.model.User;
+import next.web.LoginUserServlet;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/user/login")
-@Deprecated
-public class LoginUserServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginUserServlet.class);
+@WebServlet("/login")
+public class LoginController extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
+        requestDispatcher.forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,29 +32,16 @@ public class LoginUserServlet extends HttpServlet {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
+        User user = DataBase.findUserById(userId);
         RequestDispatcher requestDispatcher;
-        // TODO: refactoring code, extract method
-        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(password)) {
-            if (StringUtils.isEmpty(userId)) {
-                log.error("invalid userId");
-            }
-            if (StringUtils.isEmpty(password)) {
-                log.error("invalid password");
-            }
-            requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
-            requestDispatcher.forward(request, response);
-            return;
-        }
-
-        User userById = DataBase.findUserById(userId);
-        if (userById == null) {
+        if (user == null) {
             log.error("no user by userId, {}", userId);
             requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
             requestDispatcher.forward(request, response);
             return;
         }
 
-        if (!userById.getPassword().equals(password)) {
+        if (!user.matchPassword(password)) {
             log.error("invalid password");
             requestDispatcher = request.getRequestDispatcher("/user/login.jsp");
             requestDispatcher.forward(request, response);
@@ -56,9 +49,8 @@ public class LoginUserServlet extends HttpServlet {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("user", userById);
+        session.setAttribute("user", user);
 
-        response.sendRedirect("/index.jsp");
-
+        response.sendRedirect("/");
     }
 }

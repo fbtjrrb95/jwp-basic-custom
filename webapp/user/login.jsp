@@ -70,7 +70,7 @@
                 <%
                 } else {
                 %>
-                <li><a href="../user/login.jsp" role="button">로그인</a></li>
+                <li><a href="/login" role="button">로그인</a></li>
                 <li><a href="../user/form.jsp" role="button">회원가입</a></li>
                 <%
                 }
@@ -83,7 +83,7 @@
 <div class="container" id="main">
    <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/user/login">
+          <form name="question" method="post" action="/login">
               <div class="form-group">
                   <label for="userId">사용자 아이디</label>
                   <input class="form-control" id="userId" name="userId" placeholder="User ID">
