@@ -40,7 +40,7 @@ public class UserController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = new User(request.getParameter("userId"), request.getParameter("password"), request.getParameter("name"),
                 request.getParameter("email"));
         log.debug("user : {}", user);
