@@ -11,11 +11,11 @@
     <meta charset="utf-8">
     <title>SLiPP Java Web Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="../css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-fixed-top header">
@@ -68,7 +68,7 @@
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="/user/update" role="button">개인정보수정</a></li>
+                <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
@@ -85,7 +85,7 @@
 <div class="container" id="main">
    <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/user/update">
+          <form name="question" method="post" action="/users/update">
               <div class="form-group">
                   <label for="userId">사용자 아이디</label>
                   <input class="form-control" id="userId" name="userId" placeholder="User ID">

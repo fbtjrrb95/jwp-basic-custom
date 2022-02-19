@@ -66,7 +66,7 @@
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="/user/update" role="button">개인정보수정</a></li>
+                <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
@@ -99,7 +99,7 @@
                         <td><%= user.getUserId() %></td>
                         <td><%= user.getName() %></td>
                         <td><%= user.getEmail() %></td>
-                        <td><a href="/user/update" class="btn btn-success" role="button">수정</a>
+                        <td><a href="/forms/users/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
                 <%
