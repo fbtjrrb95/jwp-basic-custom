@@ -1,10 +1,8 @@
-package next.web;
+package next.controller;
 
 import core.db.DataBase;
 import next.model.User;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,20 +14,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet("/user/update")
-public class UpdateUserServlet extends HttpServlet {
-
-    Logger log = LoggerFactory.getLogger(UpdateUserServlet.class);
+@WebServlet("/users/update")
+public class UpdateUserController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        log.info("request : {}", request);
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/user/update.jsp");
-        requestDispatcher.forward(request, response);
-
-        log.info("response : {}", response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/user/update.jsp");
+        requestDispatcher.forward(req, resp);
     }
 
     @Override
@@ -62,7 +53,6 @@ public class UpdateUserServlet extends HttpServlet {
 
         DataBase.addUser(user);
 
-        response.sendRedirect("/user/list");
+        response.sendRedirect("/users");
     }
-
 }
