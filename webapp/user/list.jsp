@@ -43,7 +43,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="/user/list"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="/users"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -65,13 +65,13 @@
                 if (value != null) {
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
-                <li><a href="/user/logout" role="button">로그아웃</a></li>
-                <li><a href="/user/update" role="button">개인정보수정</a></li>
+                <li><a href="/logout" role="button">로그아웃</a></li>
+                <li><a href="/users/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
-                <li><a href="/user/login.jsp" role="button">로그인</a></li>
-                <li><a href="/user/form.jsp" role="button">회원가입</a></li>
+                <li><a href="/login" role="button">로그인</a></li>
+                <li><a href="/signup" role="button">회원가입</a></li>
                 <%
                 }
                 %>
@@ -99,7 +99,7 @@
                         <td><%= user.getUserId() %></td>
                         <td><%= user.getName() %></td>
                         <td><%= user.getEmail() %></td>
-                        <td><a href="/user/update" class="btn btn-success" role="button">수정</a>
+                        <td><a href="/users/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
                 <%
