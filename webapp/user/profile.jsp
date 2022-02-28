@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="next.model.*" %>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -56,11 +60,21 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="../index.jsp">Posts</a></li>>
+                <%
+                User user = (User) session.getAttribute("user");
+                if (user != null) {
+                %>
+                <li class="active"><a href="index.jsp">Posts</a></li>
+                <li><a href="/logout" role="button">로그아웃</a></li>
+                <li><a href="/users/update" role="button">개인정보수정</a></li>
+                <%
+                } else {
+                %>
                 <li><a href="/login" role="button">로그인</a></li>
                 <li><a href="/signup" role="button">회원가입</a></li>
-                <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="#" role="button">개인정보수정</a></li>
+                <%
+                }
+                %>
             </ul>
         </div>
     </div>
@@ -77,9 +91,10 @@
                             <img class="media-object" src="../images/80-text.png">
                         </a>
                         <div class="media-body">
-                            <h4 class="media-heading">자바지기</h4>
+                            <h4 class="media-heading"><%= user.getName() %></h4>
                             <p>
-                                <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-envelope"></span>&nbsp;javajigi@slipp.net</a>
+                                <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-envelope"></span>
+                                <%= user.getEmail() %></a>
                             </p>
                         </div>
                     </div>
