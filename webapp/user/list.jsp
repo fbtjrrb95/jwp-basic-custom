@@ -51,9 +51,25 @@
 <div class="navbar navbar-default" id="subnav">
     <div class="col-md-12">
         <div class="navbar-header">
+            <%
+            User user = (User) session.getAttribute("user");
+            %>
             <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
             <ul class="nav dropdown-menu">
-                <li><a href="/users/profile"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a></li>
+                <li>
+                <%
+                if (user != null) {
+                String userId = user.getUserId();
+                %>
+                <a href="/users/profile?userId=<%=(userId)%>">
+                <%
+                } else {
+                %>
+                <a href="/users/profile">
+                <%
+                }
+                %>
+                <i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a></li>
                 <li class="nav-divider"></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
             </ul>
@@ -61,8 +77,7 @@
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
                 <%
-                Object value = session.getAttribute("user");
-                if (value != null) {
+                if (user != null) {
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
@@ -93,12 +108,12 @@
                 <tbody>
                 <%
                 Collection<User> users = (Collection<User>) request.getAttribute("users");
-                for (User user : users) {
+                for (User _user : users) {
                 %>
                     <tr>
-                        <td><%= user.getUserId() %></td>
-                        <td><%= user.getName() %></td>
-                        <td><%= user.getEmail() %></td>
+                        <td><%= _user.getUserId() %></td>
+                        <td><%= _user.getName() %></td>
+                        <td><%= _user.getEmail() %></td>
                         <td><a href="/users/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
