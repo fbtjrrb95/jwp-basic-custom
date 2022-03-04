@@ -56,20 +56,16 @@
             %>
             <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
             <ul class="nav dropdown-menu">
-                <li>
                 <%
                 if (user != null) {
                 String userId = user.getUserId();
                 %>
-                <a href="/users/profile?userId=<%=(userId)%>">
-                <%
-                } else {
-                %>
-                <a href="/users/profile">
+                <li>
+                <a href="/users/profile?userId=<%=(userId)%>"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a>
+                </li>
                 <%
                 }
                 %>
-                <i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a></li>
                 <li class="nav-divider"></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
             </ul>
@@ -109,7 +105,7 @@
                           <div class="auth-info">
                               <i class="icon-add-comment"></i>
                               <span class="time">2016-01-15 18:47</span>
-                              <a href="/users/profile" class="author">자바지기</a>
+                              <a href="../user/profile.html" class="author">자바지기</a>
                           </div>
                           <div class="reply" title="댓글">
                               <i class="icon-reply"></i>
@@ -127,7 +123,7 @@
                           <div class="auth-info">
                               <i class="icon-add-comment"></i>
                               <span class="time">2016-01-05 18:47</span>
-                              <a href="/users/profile" class="author">김문수</a>
+                              <a href="../user/profile.html" class="author">김문수</a>
                           </div>
                           <div class="reply" title="댓글">
                               <i class="icon-reply"></i>
