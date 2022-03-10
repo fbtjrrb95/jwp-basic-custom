@@ -14,10 +14,13 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
 필요한 자료에 응답하기 위해 연산하는 역할을 담당
 
 ### servlet container
+#### 동작 순서
 * HttpServletRequest, HttpServletResponse 객체를 생성  
 * 사용자의 요청이 들어오면 해당되는 서블릿을 찾아서 서블릿의 service() 호출
 * 서블릿이 연산한 내용을 HttpServletResponse 에 담아서 사용자에게 응답
 * HttpServletRequest, HttpServletResponse 객체를 소멸
+
+#### 역할
 * 서블릿의 생명 주기를 관리
 
 ### servlet 의 생명주기
