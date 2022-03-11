@@ -21,7 +21,11 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
 * HttpServletRequest, HttpServletResponse 객체를 소멸
 
 #### 역할
+* 실제로 소켓을 만들고, 연결하는 로직 구현 
+  * 개발자가 비지니스 로직에 집중할 수 있게 함
 * 서블릿의 생명 주기를 관리
+* 멀티 쓰레드 지원 및 관리
+* 보안 관련 기능 제공
 
 ### servlet 의 생명주기
   
