@@ -9,7 +9,11 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
  순서로 확인하여 있으면 반환한다.
  > 이 과정을 찾는 것이 오래 걸렸다. default 값이어서 tomcat 코드까지 파고 들어가야 한다. 그래서 global web.xml 을 두는 것이 명시적이어서 좋아보인다. 
 
-## servlet 이란?
+## requestDispatcher
+
+
+
+## servlet
 웹 페이지에서 사용자가 필요한 자료를 동적으로 반환하기 위해 고안된 자바 프로그램
 필요한 자료에 응답하기 위해 연산하는 역할을 담당
 
