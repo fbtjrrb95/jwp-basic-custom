@@ -81,8 +81,8 @@
                 <%
                 } else {
                 %>
-                <li><a href="/login" role="button">로그인</a></li>
-                <li><a href="/signup" role="button">회원가입</a></li>
+                <li><a href="/forms/login" role="button">로그인</a></li>
+                <li><a href="/forms/signup" role="button">회원가입</a></li>
                 <%
                 }
                 %>
