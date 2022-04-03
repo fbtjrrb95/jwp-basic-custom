@@ -15,10 +15,11 @@ public class RequestMapping {
         map.put("/", new HomeController());
         map.put("/forms/signup", new ForwardController("/user/form.jsp"));
         map.put("/forms/login", new ForwardController("/user/login.jsp"));
+        map.put("/forms/users/update", new ForwardController("/user/update.jsp"));
         map.put("/login", new LoginController());
         map.put("/logout", new LogoutController());
         map.put("/users", new ListUserController());
-
+        map.put("/users/update", new UpdateUserController());
 
     }
 
