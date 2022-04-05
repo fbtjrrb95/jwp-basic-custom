@@ -21,6 +21,7 @@ public class RequestMapping {
         map.put("/users", new ListUserController());
         map.put("/users/create", new CreateUserController());
         map.put("/users/update", new UpdateUserController());
+        map.put("/users/profile", new ProfileController());
 
     }
 
