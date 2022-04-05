@@ -13,7 +13,7 @@ public class ListUserController implements Controller {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (UserSessionUtils.isLogined(request.getSession())) {
+        if (!UserSessionUtils.isLogined(request.getSession())) {
             return "redirect:/login";
         }
 
