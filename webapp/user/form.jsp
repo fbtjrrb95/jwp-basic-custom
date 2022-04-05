@@ -77,7 +77,7 @@
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="/users/update" role="button">개인정보수정</a></li>
+                <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
@@ -94,7 +94,7 @@
 <div class="container" id="main">
    <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/users">
+          <form name="question" method="post" action="/users/create">
               <div class="form-group">
                   <label for="userId">사용자 아이디</label>
                   <input class="form-control" id="userId" name="userId" placeholder="User ID">

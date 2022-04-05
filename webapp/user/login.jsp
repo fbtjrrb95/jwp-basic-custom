@@ -54,6 +54,7 @@
             <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
             <ul class="nav dropdown-menu">
                 <%
+                User user = (User) session.getAttribute("user");
                 if (user != null) {
                 String userId = user.getUserId();
                 %>
@@ -70,12 +71,11 @@
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
                 <%
-                User user = (User) session.getAttribute("user");
                 if (user != null) {
                 %>
                 <li class="active"><a href="index.jsp">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="/users/update" role="button">개인정보수정</a></li>
+                <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
