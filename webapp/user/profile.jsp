@@ -20,7 +20,7 @@
     <div class="col-md-12">
         <div class="navbar-header">
 
-            <a href="../index.jsp" class="navbar-brand">SLiPP</a>
+            <a href="/" class="navbar-brand">SLiPP</a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
@@ -76,7 +76,7 @@
                 <%
                 if (user != null) {
                 %>
-                <li class="active"><a href="../index.jsp">Posts</a></li>
+                <li class="active"><a href="/">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
                 <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
                 <%
