@@ -20,7 +20,7 @@
     <div class="col-md-12">
         <div class="navbar-header">
 
-            <a href="../index.jsp" class="navbar-brand">SLiPP</a>
+            <a href="/" class="navbar-brand">SLiPP</a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
                 <i class="glyphicon glyphicon-search"></i>
             </button>
@@ -75,14 +75,14 @@
                 <%
                 if (user != null) {
                 %>
-                <li class="active"><a href="index.jsp">Posts</a></li>
+                <li class="active"><a href="/">Posts</a></li>
                 <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="/users/update" role="button">개인정보수정</a></li>
+                <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
                 <%
                 } else {
                 %>
-                <li><a href="/login" role="button">로그인</a></li>
-                <li><a href="/signup" role="button">회원가입</a></li>
+                <li><a href="/forms/login" role="button">로그인</a></li>
+                <li><a href="/forms/signup" role="button">회원가입</a></li>
                 <%
                 }
                 %>
@@ -110,7 +110,7 @@
                         <td><%= _user.getUserId() %></td>
                         <td><%= _user.getName() %></td>
                         <td><%= _user.getEmail() %></td>
-                        <td><a href="/users/update" class="btn btn-success" role="button">수정</a>
+                        <td><a href="/forms/users/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
                 <%

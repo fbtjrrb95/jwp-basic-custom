@@ -9,12 +9,21 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
  순서로 확인하여 있으면 반환한다.
  > 이 과정을 찾는 것이 오래 걸렸다. default 값이어서 tomcat 코드까지 파고 들어가야 한다. 그래서 global web.xml 을 두는 것이 명시적이어서 좋아보인다. 
 
-## servlet 이란?
+## requestDispatcher
+
+
+
+## servlet
 웹 페이지에서 사용자가 필요한 자료를 동적으로 반환하기 위해 고안된 자바 프로그램
 필요한 자료에 응답하기 위해 연산하는 역할을 담당
 
-### servlet container
+### servlet container 
+
+![servlet-container](./images/servlet-container.png)
+
+
 #### 동작 순서
+* 웹서버와 서블릿이 소켓 생성하여 통신 가능하게 함
 * HttpServletRequest, HttpServletResponse 객체를 생성  
 * 사용자의 요청이 들어오면 해당되는 서블릿을 찾아서 서블릿의 service() 호출
 * 서블릿이 연산한 내용을 HttpServletResponse 에 담아서 사용자에게 응답
@@ -25,3 +34,9 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
   * 개발자가 비지니스 로직에 집중할 수 있게 함
 * 서블릿의 생명 주기를 관리
 * 멀티 쓰레드 지원 및 관리
+
+#### @WebServlet loadOnStartup
+서블릿은 사용자에게 처음 요청이 왔을 때 생성 및 초기화
+하지만, 사용자 요청과 관계없이 서블릿을 메모리에 로드하고 싶을 때 주는 옵션
+(e.g. loadOnStartUp = 1)
+할당된 숫자가 낮을 수록 먼저 생성
