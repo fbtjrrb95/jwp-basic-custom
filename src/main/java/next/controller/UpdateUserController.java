@@ -5,26 +5,15 @@ import next.model.User;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet("/users/update")
-public class UpdateUserController extends HttpServlet {
+public class UpdateUserController implements Controller {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/user/update.jsp");
-        requestDispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String userId = request.getParameter("userId");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
@@ -35,15 +24,11 @@ public class UpdateUserController extends HttpServlet {
 
         RequestDispatcher requestDispatcher;
         if (!Objects.equals(userId, userBySession.getUserId())) {
-            requestDispatcher = request.getRequestDispatcher("/user/update.jsp");
-            requestDispatcher.forward(request, response);
-            return;
+            return "/user/update.jsp";
         }
 
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(name) || StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
-            requestDispatcher = request.getRequestDispatcher("/user/update.jsp");
-            requestDispatcher.forward(request, response);
-            return;
+            return "/user/update.jsp";
         }
 
         User user = DataBase.findUserById(userId);
@@ -53,6 +38,6 @@ public class UpdateUserController extends HttpServlet {
 
         DataBase.addUser(user);
 
-        response.sendRedirect("/users");
+        return "redirect:/users";
     }
 }
