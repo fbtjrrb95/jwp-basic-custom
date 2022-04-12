@@ -1,12 +1,13 @@
 package next.controller;
 
-import core.db.DataBase;
+import next.dao.UserDao;
 import next.util.UserSessionUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ListUserController implements Controller {
 
@@ -17,7 +18,12 @@ public class ListUserController implements Controller {
             return "redirect:/login";
         }
 
-        request.setAttribute("users", DataBase.findAll());
+        UserDao userDao = new UserDao();
+        try {
+            request.setAttribute("users", userDao.findAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return "/user/list.jsp";
     }
 }
