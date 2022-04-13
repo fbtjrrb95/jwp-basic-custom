@@ -20,7 +20,7 @@ public class CreateUserController implements Controller {
                 request.getParameter("name"),
                 request.getParameter("email"));
         log.debug("user : {}", user);
-//        DataBase.addUser(user);
+
         UserDao userDao = new UserDao();
         try {
             userDao.insert(user);
