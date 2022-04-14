@@ -16,6 +16,13 @@ public class UserDaoTest {
 
         User actual = userDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
+
+        String newName = "newName";
+        expected.setName(newName);
+        userDao.update(expected);
+
+        User updated = userDao.findByUserId(expected.getUserId());
+        assertEquals(updated.getName(), newName);
     }
 
 }
