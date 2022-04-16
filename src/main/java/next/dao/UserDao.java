@@ -121,4 +121,23 @@ public class UserDao {
             }
         }
     }
+
+    public static void truncate() throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "TRUNCATE TABLE USERS";
+            pstmt = con.prepareStatement(sql);
+            pstmt.executeUpdate();
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }
