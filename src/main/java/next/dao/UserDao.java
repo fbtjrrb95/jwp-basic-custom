@@ -99,7 +99,26 @@ public class UserDao {
         }
     }
 
-    public void update(User expected) {
+    public void update(String userId, User user) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, user.getPassword());
+            pstmt.setString(2, user.getName());
+            pstmt.setString(3, user.getEmail());
 
+            pstmt.executeUpdate();
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }
