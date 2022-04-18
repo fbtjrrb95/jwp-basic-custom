@@ -1,6 +1,7 @@
 package next.controller;
 
 import core.db.DataBase;
+import next.dao.UserDao;
 import next.model.User;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,12 +32,14 @@ public class UpdateUserController implements Controller {
             return "/user/update.jsp";
         }
 
-        User user = DataBase.findUserById(userId);
+        UserDao userDao = new UserDao();
+        User user = userDao.findByUserId(userId);
+
         user.setEmail(email);
         user.setName(name);
         user.setPassword(password);
 
-        DataBase.addUser(user);
+        userDao.update(userId, user);
 
         return "redirect:/users";
     }
