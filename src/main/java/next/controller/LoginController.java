@@ -1,6 +1,7 @@
 package next.controller;
 
 import core.db.DataBase;
+import next.dao.UserDao;
 import next.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,8 @@ public class LoginController implements Controller {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
-        User user = DataBase.findUserById(userId);
+        UserDao userDao = new UserDao();
+        User user = userDao.findByUserId(userId);
 
         if (user == null) {
             log.error("no user by userId, {}", userId);
