@@ -2,6 +2,8 @@ package next.controller;
 
 import next.dao.UserDao;
 import next.util.UserSessionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class ListUserController implements Controller {
+    private static final Logger log = LoggerFactory.getLogger(ListUserController.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +25,7 @@ public class ListUserController implements Controller {
         try {
             request.setAttribute("users", userDao.findAll());
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return "/user/list.jsp";
     }
