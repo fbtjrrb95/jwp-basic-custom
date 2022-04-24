@@ -26,6 +26,7 @@ public class ListUserController implements Controller {
             request.setAttribute("users", userDao.findAll());
         } catch (SQLException e) {
             log.error(e.getMessage());
+            return "redirect:/";
         }
         return "/user/list.jsp";
     }
