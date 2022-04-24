@@ -26,7 +26,7 @@ public class CreateUserController implements Controller {
             userDao.insert(user);
         } catch (SQLException e) {
             log.error(e.getMessage());
-            return "reierect:/users/create";
+            return "redirect:/users/create";
         }
 
         HttpSession session = request.getSession();
