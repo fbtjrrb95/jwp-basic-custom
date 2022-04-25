@@ -4,7 +4,6 @@ import next.dao.UserDao;
 import next.model.User;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,7 +21,6 @@ public class UpdateUserController implements Controller {
         HttpSession session = request.getSession();
         User userBySession = (User) session.getAttribute("user");
 
-        RequestDispatcher requestDispatcher;
         if (!Objects.equals(userId, userBySession.getUserId())) {
             return "/user/update.jsp";
         }
