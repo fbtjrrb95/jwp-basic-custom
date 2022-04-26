@@ -11,7 +11,7 @@ import core.jdbc.ConnectionManager;
 import next.model.User;
 
 public class UserDao {
-    public void insert(User user) throws SQLException {
+    public static void insert(User user) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
@@ -67,7 +67,7 @@ public class UserDao {
         }
     }
 
-    public List<User> findAll() throws SQLException {
+    public static List<User> findAll() throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
