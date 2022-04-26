@@ -29,14 +29,13 @@ public class UpdateUserController implements Controller {
             return "/user/update.jsp";
         }
 
-        UserDao userDao = new UserDao();
-        User user = userDao.findByUserId(userId);
+        User user = UserDao.findByUserId(userId);
 
         user.setEmail(email);
         user.setName(name);
         user.setPassword(password);
 
-        userDao.update(userId, user);
+        UserDao.update(userId, user);
 
         return "redirect:/users";
     }
