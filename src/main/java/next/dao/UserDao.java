@@ -35,7 +35,7 @@ public class UserDao {
         }
     }
 
-    public User findByUserId(String userId) throws SQLException {
+    public static User findByUserId(String userId) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -99,7 +99,7 @@ public class UserDao {
         }
     }
 
-    public void update(String userId, User user) throws SQLException {
+    public static void update(String userId, User user) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
