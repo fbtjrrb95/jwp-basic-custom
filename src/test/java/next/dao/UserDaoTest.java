@@ -10,7 +10,7 @@ import next.model.User;
 
 public class UserDaoTest {
 
-    private UserDao userDao = new UserDao();
+//    private UserDao userDao = new UserDao();
 
     @Before
     public void init() throws Exception {
@@ -20,9 +20,9 @@ public class UserDaoTest {
     @Test
     public void create() throws Exception {
         User expected = new User("userId1", "password", "name", "javajigi@email.com");
-        userDao.insert(expected);
+        UserDao.insert(expected);
 
-        User actual = userDao.findByUserId(expected.getUserId());
+        User actual = UserDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
 
     }
@@ -30,14 +30,14 @@ public class UserDaoTest {
     @Test
     public void update() throws Exception {
         User expected = new User("userId1", "password", "name", "javajigi@email.com");
-        userDao.insert(expected);
+        UserDao.insert(expected);
 
         String newName = "newName";
         expected.setName(newName);
 
-        userDao.update(expected.getUserId(), expected);
+        UserDao.update(expected.getUserId(), expected);
 
-        User updated = userDao.findByUserId(expected.getUserId());
+        User updated = UserDao.findByUserId(expected.getUserId());
         assertEquals(updated.getName(), newName);
     }
 
