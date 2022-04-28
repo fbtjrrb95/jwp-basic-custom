@@ -21,9 +21,8 @@ public class ListUserController implements Controller {
             return "redirect:/login";
         }
 
-        UserDao userDao = new UserDao();
         try {
-            request.setAttribute("users", userDao.findAll());
+            request.setAttribute("users", UserDao.findAll());
         } catch (SQLException e) {
             log.error(e.getMessage());
             return "redirect:/";
