@@ -18,8 +18,7 @@ public class LoginController implements Controller {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
-        UserDao userDao = new UserDao();
-        User user = userDao.findByUserId(userId);
+        User user = UserDao.findByUserId(userId);
 
         if (user == null) {
             log.error("no user by userId, {}", userId);
