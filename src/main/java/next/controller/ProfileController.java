@@ -12,8 +12,7 @@ public class ProfileController implements Controller {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String userId = request.getParameter("userId");
-        UserDao userDao = new UserDao();
-        User user = userDao.findByUserId(userId);
+        User user = UserDao.findByUserId(userId);
 
         if (user == null) throw new IllegalArgumentException("No Valid User Id");
 
