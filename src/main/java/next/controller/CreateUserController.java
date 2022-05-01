@@ -21,9 +21,9 @@ public class CreateUserController implements Controller {
                 request.getParameter("email"));
         log.debug("user : {}", user);
 
-        UserDao userDao = new UserDao();
+
         try {
-            userDao.insert(user);
+            UserDao.insert(user);
         } catch (SQLException e) {
             log.error(e.getMessage());
             return "redirect:/users/create";
