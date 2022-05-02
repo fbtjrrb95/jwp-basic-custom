@@ -10,8 +10,6 @@ import next.model.User;
 
 public class UserDaoTest {
 
-//    private UserDao userDao = new UserDao();
-
     @Before
     public void init() throws Exception {
         UserDao.truncate();
