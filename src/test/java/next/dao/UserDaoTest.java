@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import next.model.User;
 
+import java.util.List;
+
 public class UserDaoTest {
 
     @Before
@@ -37,6 +39,21 @@ public class UserDaoTest {
 
         User updated = UserDao.findByUserId(expected.getUserId());
         assertEquals(updated.getName(), newName);
+    }
+
+    @Test
+    public void findAll() throws Exception {
+
+        User user1 = new User("userId1", "password", "name", "javajigi@email.com");
+        UserDao.insert(user1);
+
+        User user2 = new User("userId2", "password", "name", "javajigi@email.com");
+        UserDao.insert(user2);
+
+
+        List<User> all = UserDao.findAll();
+        assertEquals(all.size(), 2);
+
     }
 
 }
