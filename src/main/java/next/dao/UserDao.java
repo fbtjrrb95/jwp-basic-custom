@@ -11,7 +11,7 @@ import core.jdbc.ConnectionManager;
 import next.model.User;
 
 public class UserDao {
-    public static void insert(User user) throws SQLException {
+    public void insert(User user) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
@@ -32,16 +32,17 @@ public class UserDao {
         }
     }
 
-    private static void setValuesForInsert(User user, PreparedStatement preparedStatement) throws SQLException {
+    private void setValuesForInsert(User user, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, user.getUserId());
         preparedStatement.setString(2, user.getPassword());
         preparedStatement.setString(3, user.getName());
         preparedStatement.setString(4, user.getEmail());
     }
 
-    private static String createQueryForInsert() {
+    private String createQueryForInsert() {
         return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
     }
+
     public static User findByUserId(String userId) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;

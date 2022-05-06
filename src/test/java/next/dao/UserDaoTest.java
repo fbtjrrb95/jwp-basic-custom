@@ -1,14 +1,12 @@
 package next.dao;
 
-import static org.junit.Assert.*;
-
+import next.model.User;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import next.model.User;
-
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class UserDaoTest {
 
@@ -20,7 +18,8 @@ public class UserDaoTest {
     @Test
     public void create() throws Exception {
         User expected = new User("userId1", "password", "name", "javajigi@email.com");
-        UserDao.insert(expected);
+        UserDao userDao = new UserDao();
+        userDao.insert(expected);
 
         User actual = UserDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
@@ -29,8 +28,9 @@ public class UserDaoTest {
 
     @Test
     public void update() throws Exception {
+        UserDao userDao = new UserDao();
         User expected = new User("userId1", "password", "name", "javajigi@email.com");
-        UserDao.insert(expected);
+        userDao.insert(expected);
 
         String newName = "newName";
         expected.setName(newName);
@@ -44,11 +44,13 @@ public class UserDaoTest {
     @Test
     public void findAll() throws Exception {
 
+        UserDao userDao = new UserDao();
+
         User user1 = new User("userId1", "password", "name", "javajigi@email.com");
-        UserDao.insert(user1);
+        userDao.insert(user1);
 
         User user2 = new User("userId2", "password", "name", "javajigi@email.com");
-        UserDao.insert(user2);
+        userDao.insert(user2);
 
 
         List<User> users = UserDao.findAll();

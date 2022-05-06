@@ -15,6 +15,7 @@ public class CreateUserController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        UserDao userDao = new UserDao();
         User user = new User(request.getParameter("userId"),
                 request.getParameter("password"),
                 request.getParameter("name"),
@@ -23,7 +24,7 @@ public class CreateUserController implements Controller {
 
 
         try {
-            UserDao.insert(user);
+            userDao.insert(user);
         } catch (SQLException e) {
             log.error(e.getMessage());
             return "redirect:/users/create";
