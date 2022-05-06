@@ -16,12 +16,9 @@ public class UserDao {
         PreparedStatement pstmt = null;
         try {
             con = ConnectionManager.getConnection();
-            String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+            String sql = createQueryForInsert();
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, user.getUserId());
-            pstmt.setString(2, user.getPassword());
-            pstmt.setString(3, user.getName());
-            pstmt.setString(4, user.getEmail());
+            setValuesForInsert(user, pstmt);
 
             pstmt.executeUpdate();
         } finally {
@@ -35,6 +32,16 @@ public class UserDao {
         }
     }
 
+    private static void setValuesForInsert(User user, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, user.getUserId());
+        preparedStatement.setString(2, user.getPassword());
+        preparedStatement.setString(3, user.getName());
+        preparedStatement.setString(4, user.getEmail());
+    }
+
+    private static String createQueryForInsert() {
+        return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+    }
     public static User findByUserId(String userId) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
