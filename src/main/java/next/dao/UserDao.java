@@ -12,34 +12,18 @@ import next.model.User;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = createQueryForInsert();
-            pstmt = con.prepareStatement(sql);
-            setValuesForInsert(user, pstmt);
-
-            pstmt.executeUpdate();
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-            if (con != null) {
-                con.close();
-            }
-        }
+        InsertJdbcTemplate insertJdbcTemplate = new InsertJdbcTemplate();
+        insertJdbcTemplate.insert(user, this);
     }
 
-    private void setValuesForInsert(User user, PreparedStatement preparedStatement) throws SQLException {
+    void setValuesForInsert(User user, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, user.getUserId());
         preparedStatement.setString(2, user.getPassword());
         preparedStatement.setString(3, user.getName());
         preparedStatement.setString(4, user.getEmail());
     }
 
-    private String createQueryForInsert() {
+    String createQueryForInsert() {
         return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
     }
 
