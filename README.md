@@ -40,3 +40,6 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
 하지만, 사용자 요청과 관계없이 서블릿을 메모리에 로드하고 싶을 때 주는 옵션
 (e.g. loadOnStartUp = 1)
 할당된 숫자가 낮을 수록 먼저 생성
+
+
+#### static 과 singleton 의 차이
