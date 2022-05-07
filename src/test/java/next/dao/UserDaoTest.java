@@ -21,7 +21,7 @@ public class UserDaoTest {
         UserDao userDao = new UserDao();
         userDao.insert(expected);
 
-        User actual = UserDao.findByUserId(expected.getUserId());
+        User actual = userDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
 
     }
@@ -37,7 +37,7 @@ public class UserDaoTest {
 
         UserDao.update(expected.getUserId(), expected);
 
-        User updated = UserDao.findByUserId(expected.getUserId());
+        User updated = userDao.findByUserId(expected.getUserId());
         assertEquals(updated.getName(), newName);
     }
 

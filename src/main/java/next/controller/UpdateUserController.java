@@ -29,7 +29,8 @@ public class UpdateUserController implements Controller {
             return "/user/update.jsp";
         }
 
-        User user = UserDao.findByUserId(userId);
+        UserDao userDao = new UserDao();
+        User user = userDao.findByUserId(userId);
 
         user.setEmail(email);
         user.setName(name);

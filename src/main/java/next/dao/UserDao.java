@@ -27,7 +27,7 @@ public class UserDao {
         return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
     }
 
-    public static User findByUserId(String userId) throws SQLException {
+    public User findByUserId(String userId) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
