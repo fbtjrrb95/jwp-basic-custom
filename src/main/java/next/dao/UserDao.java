@@ -35,7 +35,7 @@ public class UserDao {
         ResultSet rs = null;
         try {
             con = ConnectionManager.getConnection();
-            String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
+            String sql = createQueryForFindById();
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, userId);
 
@@ -59,6 +59,10 @@ public class UserDao {
                 con.close();
             }
         }
+    }
+
+    private String createQueryForFindById() {
+        return "SELECT userId, password, name, email FROM USERS WHERE userId=?";
     }
 
     public static List<User> findAll() throws SQLException {
