@@ -97,7 +97,7 @@ public class UserDao {
         }
     }
 
-    public static void update(String userId, User user) throws SQLException {
+    public void update(String userId, User user) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
