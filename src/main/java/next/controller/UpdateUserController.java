@@ -36,7 +36,7 @@ public class UpdateUserController implements Controller {
         user.setName(name);
         user.setPassword(password);
 
-        userDao.update(userId, user);
+        userDao.update(user);
 
         return "redirect:/users";
     }

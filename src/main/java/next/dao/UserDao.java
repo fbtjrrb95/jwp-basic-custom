@@ -97,7 +97,7 @@ public class UserDao {
         }
     }
 
-    public void update(String userId, User user) throws SQLException {
+    public void update(User user) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
@@ -107,7 +107,7 @@ public class UserDao {
             pstmt.setString(1, user.getPassword());
             pstmt.setString(2, user.getName());
             pstmt.setString(3, user.getEmail());
-            pstmt.setString(4, userId);
+            pstmt.setString(4, user.getUserId());
 
             pstmt.executeUpdate();
         } finally {
