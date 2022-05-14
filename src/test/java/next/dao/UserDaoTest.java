@@ -35,7 +35,7 @@ public class UserDaoTest {
         String newName = "newName";
         expected.setName(newName);
 
-        userDao.update(expected.getUserId(), expected);
+        userDao.update(expected);
 
         User updated = userDao.findByUserId(expected.getUserId());
         assertEquals(updated.getName(), newName);
