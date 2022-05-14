@@ -102,11 +102,12 @@ public class UserDao {
         PreparedStatement pstmt = null;
         try {
             con = ConnectionManager.getConnection();
-            String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=?";
+            String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, user.getPassword());
             pstmt.setString(2, user.getName());
             pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, userId);
 
             pstmt.executeUpdate();
         } finally {
