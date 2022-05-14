@@ -21,7 +21,7 @@ public class UpdateUserController implements Controller {
         HttpSession session = request.getSession();
         User userBySession = (User) session.getAttribute("user");
 
-        if (!Objects.equals(userId, userBySession.getUserId())) {
+        if (userBySession == null || !Objects.equals(userId, userBySession.getUserId())) {
             return "/user/update.jsp";
         }
 
