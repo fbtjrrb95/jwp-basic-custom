@@ -98,14 +98,14 @@ public class UserDao {
     }
 
     public void update(User user) throws SQLException {
-        UpdateJdbcTemplate updateJdbcTemplate = new UpdateJdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
-            String createQueryForUpdate() {
+            String createQuery() {
                 return "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
             }
 
             @Override
-            void setValuesForUpdate(User user, PreparedStatement preparedStatement) throws SQLException {
+            void setValues(User user, PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setString(1, user.getPassword());
                 preparedStatement.setString(2, user.getName());
                 preparedStatement.setString(3, user.getEmail());
@@ -113,7 +113,7 @@ public class UserDao {
             }
         };
 
-        updateJdbcTemplate.update(user);
+        jdbcTemplate.update(user);
     }
 
     public static void truncate() throws SQLException {
