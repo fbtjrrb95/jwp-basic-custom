@@ -12,21 +12,21 @@ import next.model.User;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
-        InsertJdbcTemplate insertJdbcTemplate = new InsertJdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
-            String createQueryForInsert() {
+            String createQuery() {
                 return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
             }
 
             @Override
-            void setValuesForInsert(User user, PreparedStatement preparedStatement) throws SQLException {
+            void setValues(User user, PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setString(1, user.getUserId());
                 preparedStatement.setString(2, user.getPassword());
                 preparedStatement.setString(3, user.getName());
                 preparedStatement.setString(4, user.getEmail());
             }
         };
-        insertJdbcTemplate.insert(user);
+        jdbcTemplate.update(user);
     }
 
     public User findByUserId(String userId) throws SQLException {
