@@ -53,7 +53,7 @@ public class UserDaoTest {
         userDao.insert(user2);
 
 
-        List<User> users = UserDao.findAll();
+        List<User> users = userDao.findAll();
         assertEquals(users.size(), 2);
         assertEquals(users.get(0).getUserId(), "userId1");
         assertEquals(users.get(1).getUserId(), "userId2");
