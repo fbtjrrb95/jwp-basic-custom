@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UserDaoTest {
 
@@ -58,6 +58,17 @@ public class UserDaoTest {
         assertEquals(users.get(0).getUserId(), "userId1");
         assertEquals(users.get(1).getUserId(), "userId2");
 
+    }
+
+    @Test
+    public void findByUserId() throws Exception {
+        UserDao userDao = new UserDao();
+
+        User user = new User("userId", "password", "name", "javajigi@email.com");
+        userDao.insert(user);
+
+        User save = userDao.findByUserId("userId");
+        assertNotNull(save);
     }
 
 }
