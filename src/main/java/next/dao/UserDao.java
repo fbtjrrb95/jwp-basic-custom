@@ -26,7 +26,7 @@ public class UserDao {
                 preparedStatement.setString(4, user.getEmail());
             }
         };
-        jdbcTemplate.update();
+        jdbcTemplate.updateWithQuery("INSERT INTO USERS VALUES (?, ?, ?, ?)");
     }
 
     public User findByUserId(String userId) throws SQLException {
