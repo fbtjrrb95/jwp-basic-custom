@@ -113,7 +113,7 @@ public class UserDao {
             }
         };
 
-        jdbcTemplate.update();
+        jdbcTemplate.updateWithQuery("UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?");
     }
 
     public static void truncate() throws SQLException {
