@@ -30,6 +30,5 @@ public abstract class JdbcTemplate {
     }
 
 
-    abstract String createQuery();
     abstract void setValues(PreparedStatement preparedStatement) throws SQLException;
 }

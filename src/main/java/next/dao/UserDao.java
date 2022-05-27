@@ -13,10 +13,6 @@ import next.model.User;
 public class UserDao {
     public void insert(User user) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            String createQuery() {
-                return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-            }
 
             @Override
             void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -99,10 +95,6 @@ public class UserDao {
 
     public void update(User user) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            String createQuery() {
-                return "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
-            }
 
             @Override
             void setValues(PreparedStatement preparedStatement) throws SQLException {
