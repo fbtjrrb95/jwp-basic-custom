@@ -33,7 +33,7 @@ public class DispatcherServlet extends HttpServlet {
             String viewName = controller.execute(request, response);
             move(viewName, request, response);
         } catch (Exception e) {
-            log.error("Exception : {}", e);
+            log.error("Exception : {}", e.toString());
             throw new ServletException(e.getMessage());
         }
 
