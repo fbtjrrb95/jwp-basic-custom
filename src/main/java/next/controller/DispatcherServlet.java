@@ -19,7 +19,7 @@ public class DispatcherServlet extends HttpServlet {
 
     private RequestMapping map;
 
-    public void init() throws ServletException {
+    public void init() {
         map = new RequestMapping();
         map.init();
     }
