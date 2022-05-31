@@ -61,7 +61,7 @@ public class UserDao {
         return "SELECT userId, password, name, email FROM USERS WHERE userId=?";
     }
 
-    public static List<User> findAll() throws SQLException {
+    public List<User> findAll() throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

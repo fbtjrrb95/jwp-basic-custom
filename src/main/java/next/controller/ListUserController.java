@@ -20,9 +20,9 @@ public class ListUserController implements Controller {
         if (!UserSessionUtils.isLogined(request.getSession())) {
             return "redirect:/login";
         }
-
+        UserDao userDao = new UserDao();
         try {
-            request.setAttribute("users", UserDao.findAll());
+            request.setAttribute("users", userDao.findAll());
         } catch (SQLException e) {
             log.error(e.getMessage());
             return "redirect:/";
