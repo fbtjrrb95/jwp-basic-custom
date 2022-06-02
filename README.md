@@ -50,3 +50,6 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
 
 
 #### static 과 singleton 의 차이
+
+
+#### @SuppressWarnings("rawtypes") ?
