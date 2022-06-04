@@ -42,7 +42,6 @@ public abstract class SelectJdbcTemplate {
 
     }
 
-    abstract Object mapRow(ResultSet rs);
-
+    abstract Object mapRow(ResultSet rs) throws SQLException;
     abstract void setValues(PreparedStatement pstmt);
 }
