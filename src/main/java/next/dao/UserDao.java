@@ -22,7 +22,7 @@ public class UserDao {
                 preparedStatement.setString(4, user.getEmail());
             }
         };
-        jdbcTemplate.updateWithQuery("INSERT INTO USERS VALUES (?, ?, ?, ?)");
+        jdbcTemplate.update("INSERT INTO USERS VALUES (?, ?, ?, ?)");
     }
 
     public User findByUserId(String userId) throws SQLException {
@@ -82,7 +82,7 @@ public class UserDao {
             }
         };
 
-        jdbcTemplate.updateWithQuery("UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?");
+        jdbcTemplate.update("UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?");
     }
 
     public static void truncate() throws SQLException {
