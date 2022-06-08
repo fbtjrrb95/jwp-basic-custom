@@ -21,6 +21,11 @@ public class UserDao {
                 preparedStatement.setString(3, user.getName());
                 preparedStatement.setString(4, user.getEmail());
             }
+
+            @Override
+            Object mapRow(ResultSet rs) throws SQLException {
+                return null;
+            }
         };
         jdbcTemplate.update("INSERT INTO USERS VALUES (?, ?, ?, ?)");
     }
@@ -79,6 +84,11 @@ public class UserDao {
                 preparedStatement.setString(2, user.getName());
                 preparedStatement.setString(3, user.getEmail());
                 preparedStatement.setString(4, user.getUserId());
+            }
+
+            @Override
+            Object mapRow(ResultSet rs) throws SQLException {
+                return null;
             }
         };
 
