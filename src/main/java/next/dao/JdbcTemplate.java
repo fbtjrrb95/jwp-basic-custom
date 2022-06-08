@@ -11,7 +11,8 @@ public abstract class JdbcTemplate {
     public void update(String sql) throws SQLException {
         try (
                 Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)
+        ) {
 
             setValues(pstmt);
             pstmt.executeUpdate();
