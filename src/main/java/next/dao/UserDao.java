@@ -31,7 +31,7 @@ public class UserDao {
     }
 
     public User findByUserId(String userId) throws SQLException {
-        SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
                 return new User(
@@ -47,7 +47,7 @@ public class UserDao {
             }
         };
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
-        return (User) selectJdbcTemplate.queryForObject(sql);
+        return (User) jdbcTemplate.queryForObject(sql);
     }
 
     private String createQueryForFindById() {
