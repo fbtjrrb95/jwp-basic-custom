@@ -50,10 +50,6 @@ public class UserDao {
         return (User) jdbcTemplate.queryForObject(sql);
     }
 
-    private String createQueryForFindById() {
-        return "SELECT userId, password, name, email FROM USERS WHERE userId=?";
-    }
-
     public List<User> findAll() throws SQLException {
         SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
             @Override
