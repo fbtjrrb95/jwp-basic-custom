@@ -42,15 +42,6 @@ public abstract class SelectJdbcTemplate {
 
     }
 
-    @SuppressWarnings("rawTypes")
-    public Object queryForObject(String sql) throws SQLException {
-        List result = query(sql);
-        if (result.isEmpty()) {
-            return null;
-        }
-        return result.get(0);
-    }
-
     abstract Object mapRow(ResultSet rs) throws SQLException;
     abstract void setValues(PreparedStatement pstmt);
 }
