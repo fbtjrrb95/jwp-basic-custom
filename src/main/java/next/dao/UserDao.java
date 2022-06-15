@@ -51,7 +51,7 @@ public class UserDao {
     }
 
     public List<User> findAll() throws SQLException {
-        SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
                 return new User(
@@ -68,7 +68,7 @@ public class UserDao {
 
         };
         String sql = "SELECT userId, password, name, email FROM USERS";
-        return (List<User>)selectJdbcTemplate.query(sql);
+        return (List<User>)jdbcTemplate.query(sql);
     }
 
     public void update(User user) throws SQLException {
