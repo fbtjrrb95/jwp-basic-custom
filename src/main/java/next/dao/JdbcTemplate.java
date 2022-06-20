@@ -22,6 +22,16 @@ public abstract class JdbcTemplate {
         }
     }
 
+    public void update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
+        try (
+                Connection con = ConnectionManager.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)
+        ) {
+            preparedStatementSetter.setValues(pstmt);
+            pstmt.executeUpdate();
+        }
+    }
+
     @SuppressWarnings("rawtypes")
     public List query(String sql) throws SQLException {
         Connection con = null;

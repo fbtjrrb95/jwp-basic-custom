@@ -11,10 +11,18 @@ import java.util.List;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
+
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setString(1, user.getUserId());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getName());
+            preparedStatement.setString(4, user.getEmail());
+        };
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 
             @Override
-            void setValues(PreparedStatement preparedStatement) throws SQLException {
+            public void setValues(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setString(1, user.getUserId());
                 preparedStatement.setString(2, user.getPassword());
                 preparedStatement.setString(3, user.getName());
@@ -26,7 +34,8 @@ public class UserDao {
                 return null;
             }
         };
-        jdbcTemplate.update("INSERT INTO USERS VALUES (?, ?, ?, ?)");
+        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, preparedStatementSetter);
     }
 
     public User findByUserId(String userId) throws SQLException {
@@ -71,6 +80,12 @@ public class UserDao {
     }
 
     public void update(User user) throws SQLException {
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setString(1, user.getUserId());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getName());
+            preparedStatement.setString(4, user.getEmail());
+        };
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 
             @Override
@@ -86,8 +101,8 @@ public class UserDao {
                 return null;
             }
         };
-
-        jdbcTemplate.update("UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?");
+        String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
+        jdbcTemplate.update(sql, preparedStatementSetter);
     }
 
     public static void truncate() throws SQLException {
