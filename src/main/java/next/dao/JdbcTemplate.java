@@ -52,6 +52,25 @@ public abstract class JdbcTemplate {
         }
     }
 
+    public List query(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
+
+        ResultSet rs = null;
+        try (
+                Connection con = ConnectionManager.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql);
+        ){
+            preparedStatementSetter.setValues(pstmt);
+
+            rs = pstmt.executeQuery();
+
+            List<Object> result = new ArrayList<>();
+            while (rs.next()) {
+                result.add(mapRow(rs));
+            }
+            return result;
+        }
+    }
+
     @SuppressWarnings("rawTypes")
     public Object queryForObject(String sql) throws SQLException {
         List result = query(sql);
