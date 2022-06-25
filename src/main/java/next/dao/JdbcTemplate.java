@@ -1,6 +1,8 @@
 package next.dao;
 
 import core.jdbc.ConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,50 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class JdbcTemplate {
-
-    public void update(String sql) throws SQLException {
-        try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)
-        ) {
-
-            setValues(pstmt);
-            pstmt.executeUpdate();
-        }
-    }
-
+    private static final Logger logger = LoggerFactory.getLogger(JdbcTemplate.class);
     public void update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
         try (
                 Connection con = ConnectionManager.getConnection();
                 PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
+            logger.info("update statement: " + pstmt);
             preparedStatementSetter.setValues(pstmt);
             pstmt.executeUpdate();
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    public List query(String sql) throws SQLException {
-
-        ResultSet rs = null;
-        try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql);
-        ){
-            setValues(pstmt);
-
-            rs = pstmt.executeQuery();
-
-            List<Object> result = new ArrayList<>();
-            while (rs.next()) {
-                result.add(mapRow(rs));
-            }
-            return result;
-        }
-    }
-
     public List query(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
-
         ResultSet rs = null;
         try (
                 Connection con = ConnectionManager.getConnection();
@@ -71,14 +42,6 @@ public abstract class JdbcTemplate {
         }
     }
 
-    @SuppressWarnings("rawTypes")
-    public Object queryForObject(String sql) throws SQLException {
-        List result = query(sql);
-        if (result.isEmpty()) {
-            return null;
-        }
-        return result.get(0);
-    }
 
     @SuppressWarnings("rawTypes")
     public Object queryForObject(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
@@ -89,6 +52,5 @@ public abstract class JdbcTemplate {
         return result.get(0);
     }
 
-    abstract void setValues(PreparedStatement preparedStatement) throws SQLException;
     abstract Object mapRow(ResultSet rs) throws SQLException;
 }

@@ -11,24 +11,13 @@ import java.util.List;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
-
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setString(1, user.getUserId());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getName());
             preparedStatement.setString(4, user.getEmail());
         };
-
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-
-            @Override
-            public void setValues(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setString(1, user.getUserId());
-                preparedStatement.setString(2, user.getPassword());
-                preparedStatement.setString(3, user.getName());
-                preparedStatement.setString(4, user.getEmail());
-            }
-
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
                 return null;
@@ -52,17 +41,12 @@ public class UserDao {
                         rs.getString("email"));
             }
 
-            @Override
-            void setValues(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, userId);
-            }
         };
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
         return (User) jdbcTemplate.queryForObject(sql, preparedStatementSetter);
     }
 
     public List<User> findAll() throws SQLException {
-
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
@@ -73,11 +57,6 @@ public class UserDao {
                         rs.getString("email"));
             }
 
-            @Override
-            void setValues(PreparedStatement pstmt) {
-
-            }
-
         };
         String sql = "SELECT userId, password, name, email FROM USERS";
         return (List<User>)jdbcTemplate.query(sql, preparedStatement -> {});
@@ -85,21 +64,12 @@ public class UserDao {
 
     public void update(User user) throws SQLException {
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
-            preparedStatement.setString(1, user.getUserId());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getName());
-            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(1, user.getPassword());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getUserId());
         };
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-
-            @Override
-            void setValues(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setString(1, user.getPassword());
-                preparedStatement.setString(2, user.getName());
-                preparedStatement.setString(3, user.getEmail());
-                preparedStatement.setString(4, user.getUserId());
-            }
-
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
                 return null;
