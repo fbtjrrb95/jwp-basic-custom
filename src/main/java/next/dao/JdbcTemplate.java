@@ -80,6 +80,15 @@ public abstract class JdbcTemplate {
         return result.get(0);
     }
 
+    @SuppressWarnings("rawTypes")
+    public Object queryForObject(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
+        List result = query(sql, preparedStatementSetter);
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
+    }
+
     abstract void setValues(PreparedStatement preparedStatement) throws SQLException;
     abstract Object mapRow(ResultSet rs) throws SQLException;
 }
