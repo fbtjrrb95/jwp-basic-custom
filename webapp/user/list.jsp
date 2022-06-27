@@ -103,13 +103,14 @@
                 </thead>
                 <tbody>
                 <%
-                Collection<User> users = (Collection<User>) request.getAttribute("users");
-                for (User _user : users) {
+                    List<User> users = (List<User>) request.getAttribute("users");
+                for (int i = 0 ; i< users.size(); i++) {
                 %>
                     <tr>
-                        <td><%= _user.getUserId() %></td>
-                        <td><%= _user.getName() %></td>
-                        <td><%= _user.getEmail() %></td>
+                        <td><%= i + 1 %></td>
+                        <td><%= users.get(i).getUserId() %></td>
+                        <td><%= users.get(i).getName() %></td>
+                        <td><%= users.get(i).getEmail() %></td>
                         <td><a href="/forms/users/update" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
