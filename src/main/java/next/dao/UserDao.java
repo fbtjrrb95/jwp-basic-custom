@@ -31,6 +31,11 @@ public class UserDao {
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setString(1, userId);
         };
+        RowMapper rowMapper = resultSet -> new User(
+                resultSet.getString("userId"),
+                resultSet.getString("password"),
+                resultSet.getString("name"),
+                resultSet.getString("email"));
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
@@ -43,7 +48,7 @@ public class UserDao {
 
         };
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
-        return (User) jdbcTemplate.queryForObject(sql, preparedStatementSetter);
+        return (User) jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
 
     public List<User> findAll() throws SQLException {
