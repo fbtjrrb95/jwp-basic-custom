@@ -62,15 +62,6 @@ public abstract class JdbcTemplate {
 
 
     @SuppressWarnings("rawTypes")
-    public Object queryForObject(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
-        List result = query(sql, preparedStatementSetter);
-        if (result.isEmpty()) {
-            return null;
-        }
-        return result.get(0);
-    }
-
-    @SuppressWarnings("rawTypes")
     public Object queryForObject(String sql, PreparedStatementSetter preparedStatementSetter, RowMapper rowMapper) throws SQLException {
         List result = query(sql, preparedStatementSetter, rowMapper);
         if (result.isEmpty()) {
