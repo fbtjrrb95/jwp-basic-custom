@@ -52,6 +52,12 @@ public class UserDao {
     }
 
     public List<User> findAll() throws SQLException {
+        RowMapper rowMapper = resultSet -> new User(
+                resultSet.getString("userId"),
+                resultSet.getString("password"),
+                resultSet.getString("name"),
+                resultSet.getString("email"));
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {
             @Override
             Object mapRow(ResultSet rs) throws SQLException {
@@ -64,7 +70,7 @@ public class UserDao {
 
         };
         String sql = "SELECT userId, password, name, email FROM USERS";
-        return (List<User>)jdbcTemplate.query(sql, preparedStatement -> {});
+        return (List<User>)jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 
     public void update(User user) throws SQLException {
