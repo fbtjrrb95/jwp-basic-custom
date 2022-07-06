@@ -44,7 +44,7 @@ public class UserDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS";
-        return (List<User>)jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
+        return (List<User>) jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 
     public void update(User user) throws SQLException {
@@ -59,13 +59,9 @@ public class UserDao {
         jdbcTemplate.update(sql, preparedStatementSetter);
     }
 
-    public static void truncate() throws SQLException {
-        String sql = "TRUNCATE TABLE USERS";
-        try (
-            Connection con = ConnectionManager.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(sql);
-        ){
-            pstmt.executeUpdate();
-        }
+    public void truncate() throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
+        jdbcTemplate.truncate();
     }
+
 }

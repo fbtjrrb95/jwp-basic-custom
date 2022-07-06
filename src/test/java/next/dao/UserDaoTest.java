@@ -12,7 +12,8 @@ public class UserDaoTest {
 
     @Before
     public void init() throws Exception {
-        UserDao.truncate();
+        UserDao userDao = new UserDao();
+        userDao.truncate();
     }
 
     @Test

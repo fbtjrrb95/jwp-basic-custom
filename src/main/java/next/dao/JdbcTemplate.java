@@ -15,8 +15,8 @@ public abstract class JdbcTemplate {
     private static final Logger logger = LoggerFactory.getLogger(JdbcTemplate.class);
     public void update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
         try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
             logger.info("update statement: " + pstmt);
             preparedStatementSetter.setValues(pstmt);
@@ -27,8 +27,8 @@ public abstract class JdbcTemplate {
     public List query(String sql, PreparedStatementSetter preparedStatementSetter, RowMapper rowMapper) throws SQLException {
         ResultSet rs = null;
         try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql);
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
         ){
             preparedStatementSetter.setValues(pstmt);
 
@@ -49,6 +49,16 @@ public abstract class JdbcTemplate {
             return null;
         }
         return result.get(0);
+    }
+
+    public void truncate() throws SQLException {
+        String sql = "truncate table users";
+        try (
+                Connection con = ConnectionManager.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql);
+        ){
+            pstmt.executeUpdate();
+        }
     }
 
 }
