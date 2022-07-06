@@ -5,7 +5,6 @@ import next.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -61,21 +60,12 @@ public class UserDao {
     }
 
     public static void truncate() throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = "TRUNCATE TABLE USERS";
-            pstmt = con.prepareStatement(sql);
+        String sql = "TRUNCATE TABLE USERS";
+        try (
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+        ){
             pstmt.executeUpdate();
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-            if (con != null) {
-                con.close();
-            }
         }
     }
 }
