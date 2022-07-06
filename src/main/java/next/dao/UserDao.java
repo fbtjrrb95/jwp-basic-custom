@@ -17,12 +17,7 @@ public class UserDao {
             preparedStatement.setString(3, user.getName());
             preparedStatement.setString(4, user.getEmail());
         };
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            Object mapRow(ResultSet rs) throws SQLException {
-                return null;
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, preparedStatementSetter);
     }
@@ -36,17 +31,7 @@ public class UserDao {
                 resultSet.getString("password"),
                 resultSet.getString("name"),
                 resultSet.getString("email"));
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            Object mapRow(ResultSet rs) throws SQLException {
-                return new User(
-                        rs.getString("userId"),
-                        rs.getString("password"),
-                        rs.getString("name"),
-                        rs.getString("email"));
-            }
-
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
         return (User) jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
@@ -58,17 +43,7 @@ public class UserDao {
                 resultSet.getString("name"),
                 resultSet.getString("email"));
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            Object mapRow(ResultSet rs) throws SQLException {
-                return new User(
-                        rs.getString("userId"),
-                        rs.getString("password"),
-                        rs.getString("name"),
-                        rs.getString("email"));
-            }
-
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS";
         return (List<User>)jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
@@ -80,12 +55,7 @@ public class UserDao {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getUserId());
         };
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            Object mapRow(ResultSet rs) throws SQLException {
-                return null;
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
         jdbcTemplate.update(sql, preparedStatementSetter);
     }
