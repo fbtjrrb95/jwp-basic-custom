@@ -1,10 +1,7 @@
 package next.dao;
 
-import core.jdbc.ConnectionManager;
 import next.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class UserDao {
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setString(1, userId);
         };
-        RowMapper rowMapper = resultSet -> new User(
+        RowMapper<User> rowMapper = resultSet -> new User(
                 resultSet.getString("userId"),
                 resultSet.getString("password"),
                 resultSet.getString("name"),
@@ -36,7 +33,7 @@ public class UserDao {
     }
 
     public List<User> findAll() throws SQLException {
-        RowMapper rowMapper = resultSet -> new User(
+        RowMapper<User> rowMapper = resultSet -> new User(
                 resultSet.getString("userId"),
                 resultSet.getString("password"),
                 resultSet.getString("name"),
