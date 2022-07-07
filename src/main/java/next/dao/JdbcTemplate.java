@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class JdbcTemplate {
-    private static final Logger logger = LoggerFactory.getLogger(JdbcTemplate.class);
     public void update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
         try (
             Connection con = ConnectionManager.getConnection();
