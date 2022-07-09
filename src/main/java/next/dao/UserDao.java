@@ -29,7 +29,7 @@ public class UserDao {
                 resultSet.getString("email"));
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
-        return (User) jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
+        return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
 
     public List<User> findAll() throws SQLException {
@@ -41,7 +41,7 @@ public class UserDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS";
-        return (List<User>) jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
+        return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 
     public void update(User user) throws SQLException {
