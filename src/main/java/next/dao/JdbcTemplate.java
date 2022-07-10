@@ -22,6 +22,19 @@ public abstract class JdbcTemplate {
         }
     }
 
+    public void update(String sql, Object... parameters) throws SQLException {
+        try (
+                Connection con = ConnectionManager.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)
+        ) {
+            for (int i = 0; i< parameters.length; i++) {
+                pstmt.setObject(i + 1, parameters[i]);
+            }
+            pstmt.executeUpdate();
+        }
+    }
+
+
     public <T> List<T> query(String sql, PreparedStatementSetter preparedStatementSetter, RowMapper<T> rowMapper) throws SQLException {
         ResultSet rs = null;
         try (
