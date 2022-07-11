@@ -27,7 +27,7 @@ public abstract class JdbcTemplate {
                 Connection con = ConnectionManager.getConnection();
                 PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
-            for (int i = 0; i< parameters.length; i++) {
+            for (int i = 0; i < parameters.length; i++) {
                 pstmt.setObject(i + 1, parameters[i]);
             }
             pstmt.executeUpdate();
