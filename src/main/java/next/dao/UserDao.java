@@ -18,6 +18,12 @@ public class UserDao {
         jdbcTemplate.update(sql, preparedStatementSetter);
     }
 
+    public void insert(String userId, String password, String name, String email) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
+        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, userId, password, name, email);
+    }
+
     public User findByUserId(String userId) throws SQLException {
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setString(1, userId);
