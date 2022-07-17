@@ -8,7 +8,6 @@
 </head>
 <body>
 <%@ include file="/include/navigation.jspf" %>
-
 <div class="container" id="main">
    <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">

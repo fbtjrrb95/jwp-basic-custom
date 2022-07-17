@@ -1,97 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
-<%@ page import="next.model.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>SLiPP Java Web Programming</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link href="../css/styles.css" rel="stylesheet">
+    <%@ include file="/include/header.jspf" %>
 </head>
-<body>
-<nav class="navbar navbar-fixed-top header">
-    <div class="col-md-12">
-        <div class="navbar-header">
-
-            <a href="/" class="navbar-brand">SLiPP</a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-                <i class="glyphicon glyphicon-search"></i>
-            </button>
-
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse1">
-            <form class="navbar-form pull-left">
-                <div class="input-group" style="max-width:470px;">
-                    <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="https://slipp.net" target="_blank">SLiPP</a></li>
-                        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
-                    </ul>
-                </li>
-                <li><a href="/users"><i class="glyphicon glyphicon-user"></i></a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="navbar navbar-default" id="subnav">
-    <div class="col-md-12">
-        <div class="navbar-header">
-            <%
-            User user = (User) session.getAttribute("user");
-            %>
-            <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
-            <ul class="nav dropdown-menu">
-                <%
-                if (user != null) {
-                String userId = user.getUserId();
-                %>
-                <li>
-                <a href="/users/profile?userId=<%=(userId)%>"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a>
-                </li>
-                <%
-                }
-                %>
-                <li class="nav-divider"></li>
-                <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
-            </ul>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse2">
-            <ul class="nav navbar-nav navbar-right">
-                <%
-                if (user != null) {
-                %>
-                <li class="active"><a href="/">Posts</a></li>
-                <li><a href="/logout" role="button">로그아웃</a></li>
-                <li><a href="/forms/users/update" role="button">개인정보수정</a></li>
-                <%
-                } else {
-                %>
-                <li><a href="/forms/login" role="button">로그인</a></li>
-                <li><a href="/forms/signup" role="button">회원가입</a></li>
-                <%
-                }
-                %>
-
-            </ul>
-        </div>
-    </div>
-</div>
-
+<body
+<%@ include file="/include/navigation.jspf" %>
 <div class="container" id="main">
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
@@ -102,30 +18,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <%
-                    List<User> users = (List<User>) request.getAttribute("users");
-                for (int i = 0 ; i< users.size(); i++) {
-                %>
+                <c:forEach items="${users}" var="user" varStatus="status">
                     <tr>
-                        <td><%= i + 1 %></td>
-                        <td><%= users.get(i).getUserId() %></td>
-                        <td><%= users.get(i).getName() %></td>
-                        <td><%= users.get(i).getEmail() %></td>
-                        <td><a href="/forms/users/update" class="btn btn-success" role="button">수정</a>
+                        <th scope="row">${status.count}</th>
+                        <td>${user.userId}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td><a href="/forms/users/update?userId=${user.userId}" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
-                <%
-                }
-                %>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- script references -->
-<script src="../js/jquery-2.2.0.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/scripts.js"></script>
+<%@ include file="/include/footer.jspf" %>
 </body>
 </html>
