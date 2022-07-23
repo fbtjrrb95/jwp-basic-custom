@@ -22,7 +22,7 @@ public class RequestMapping {
         map.put("/users/create", new CreateUserController());
         map.put("/users/update", new UpdateUserController());
         map.put("/users/profile", new ProfileController());
-
+        map.put("/qna/answer", new AnswerController());
     }
 
     public Controller getController(String url) {
