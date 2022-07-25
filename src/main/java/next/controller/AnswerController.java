@@ -34,6 +34,10 @@ public class AnswerController implements Controller {
             printWriter.print(Arrays.toString(objectMapper.writeValueAsBytes(savedAnswer)));
             return null;
         }
+
+        if (Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.GET)) {
+            return null;
+        }
         throw new NotFoundException("NOT FOUND");
     }
 }
