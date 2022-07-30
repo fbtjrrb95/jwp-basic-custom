@@ -3,7 +3,7 @@ $(".answerWrite input[type=submit]").click(addAnswer);
 function addAnswer(e) {
   console.log('add answer function');
   e.preventDefault();
-  const queryString = $('form[name=answer]').serialize();
+  const queryString = $("form[name=answer]").serialize();
 
   $.ajax({
     type: 'post',

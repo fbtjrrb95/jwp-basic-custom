@@ -16,6 +16,8 @@ public class RequestMapping {
         map.put("/forms/signup", new ForwardController("/user/form.jsp"));
         map.put("/forms/login", new ForwardController("/user/login.jsp"));
         map.put("/forms/users/update", new ForwardController("/user/update.jsp"));
+        map.put("/forms/qna", new ForwardController("/qna/form.jsp"));
+        map.put("/qnas", new ForwardController("/qna/show.jsp"));
         map.put("/login", new LoginController());
         map.put("/logout", new LogoutController());
         map.put("/users", new ListUserController());
@@ -23,11 +25,10 @@ public class RequestMapping {
         map.put("/users/update", new UpdateUserController());
         map.put("/users/profile", new ProfileController());
         map.put("/qna/answer", new AnswerController());
+
     }
 
     public Controller getController(String url) {
         return map.get(url);
     }
-
-
 }
