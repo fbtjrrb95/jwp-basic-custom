@@ -1,7 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="next.model.*" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -10,6 +9,7 @@
 </head>
 <body>
 <%@ include file="/include/navigation.jspf" %>
+
 <div class="container" id="main">
     <div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
         <div class="panel panel-default">
@@ -55,7 +55,6 @@
                     <div class="qna-comment-slipp">
                         <p class="qna-comment-count"><strong>${question.countOfComment}</strong>개의 의견</p>
                         <div class="qna-comment-slipp-articles">
-
                             <c:forEach items="${answers}" var="each">
                                 <article class="article">
                                     <div class="article-header">
@@ -106,6 +105,35 @@
     </div>
 </div>
 
+<script type="text/template" id="answerTemplate">
+    <article class="article">
+        <div class="article-header">
+            <div class="article-header-thumb">
+                <img src="https://graph.facebook.com/v2.3/1324855987/picture" class="article-author-thumb" alt="">
+            </div>
+            <div class="article-header-text">
+                {0}
+                <div class="article-header-time">{1}</div>
+            </div>
+        </div>
+        <div class="article-doc comment-doc">
+            {2}
+        </div>
+        <div class="article-util">
+            <ul class="article-util-list">
+                <li>
+                    <a class="link-modify-article" href="/api/qna/updateAnswer/{3}">수정</a>
+                </li>
+                <li>
+                    <form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
+                        <input type="hidden" name="answerId" value="{4}" />
+                        <button type="submit" class="link-delete-article">삭제</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </article>
+</script>
 <%@ include file="/include/footer.jspf" %>
-    </body>
+</body>
 </html>
