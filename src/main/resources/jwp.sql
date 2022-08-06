@@ -11,25 +11,26 @@ CREATE TABLE USERS (
 
 INSERT INTO USERS VALUES('admin', 'password', '자바지기', 'admin@slipp.net');
 
-DROP TABLE IF EXISTS QUESTIONS;
+DROP TABLE IF EXISTS QUESTION;
 
-CREATE TABLE QUESTIONS (
-    questionId 			bigint				auto_increment,
+CREATE TABLE QUESTION (
+    id 			bigint				auto_increment,
     writer				varchar(30)			NOT NULL,
     title				varchar(50)			NOT NULL,
     contents			varchar(5000)		NOT NULL,
-    createdDate			timestamp			NOT NULL,
-    countOfAnswer int,
-    PRIMARY KEY               (questionId)
+    createdAt			timestamp			NOT NULL,
+    updatedAt			timestamp			NOT NULL,
+    PRIMARY KEY               (id)
 );
 
-DROP TABLE IF EXISTS ANSWERS;
+DROP TABLE IF EXISTS ANSWER;
 
-CREATE TABLE ANSWERS (
-     answerId 			bigint				auto_increment,
+CREATE TABLE ANSWER (
+     id 			bigint				auto_increment,
      writer				varchar(30)			NOT NULL,
      contents			varchar(5000)		NOT NULL,
-     createdDate			timestamp			NOT NULL,
+     createdAt			timestamp			NOT NULL,
+     updatedAt			timestamp			NOT NULL,
      questionId			bigint				NOT NULL,
-     PRIMARY KEY         (answerId)
+     PRIMARY KEY         (id)
 );
