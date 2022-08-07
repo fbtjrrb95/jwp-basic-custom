@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -23,7 +25,8 @@ public class AnswerController implements Controller {
             String writer = request.getParameter("writer");
             String contents = request.getParameter("contents");
             Long questionId = Long.parseLong(request.getParameter("questionId"));
-            Answer answer = new Answer(writer, contents, questionId);
+            Timestamp createdAt = Timestamp.from(Instant.now());
+            Answer answer = new Answer(writer, contents, questionId, createdAt);
             log.debug("answer: {}", answer);
 
             AnswerDao answerDao = new AnswerDao();
