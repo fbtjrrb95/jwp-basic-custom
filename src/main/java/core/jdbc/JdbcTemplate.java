@@ -1,6 +1,9 @@
-package next.dao;
+package core.jdbc;
 
-import core.jdbc.ConnectionManager;
+import next.dao.PreparedStatementSetter;
+import next.dao.RowMapper;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,6 +48,21 @@ public abstract class JdbcTemplate {
         }
     }
 
+    public Long update(PreparedStatementCreator psc) throws SQLException {
+        ResultSet rs = null;
+        try (Connection conn = ConnectionManager.getConnection()) {
+            PreparedStatement ps = psc.createPreparedStatement(conn);
+            ps.executeUpdate();
+
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getLong(1);
+            }
+            throw new SQLException("no data available");
+        } finally {
+            rs.close();
+        }
+    }
 
     public <T> List<T> query(String sql, PreparedStatementSetter preparedStatementSetter, RowMapper<T> rowMapper) throws SQLException {
         ResultSet rs = null;
