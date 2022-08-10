@@ -1,14 +1,30 @@
 $(".answerWrite input[type=submit]").click(addAnswer);
+$(".questionWrite input[type=submit]").click(addQuestion);
 
 function addAnswer(e) {
   console.log('add answer function');
   e.preventDefault();
-  const queryString = $("form[name=answer]").serialize();
+  const params = $("form[name=answer]").serialize();
 
   $.ajax({
     type: 'post',
-    url: '/qna/answer',
-    data: queryString,
+    url: '/qna/answers',
+    data: params,
+    dataType: 'json',
+    error: onError,
+    success: onSuccess,
+  })
+}
+
+function addQuestion(e) {
+  console.log('add question function');
+  e.preventDefault();
+  const params = $("form[name=question]").serialize();
+
+  $.ajax({
+    type: 'post',
+    url: '/qna/questions',
+    data: params,
     dataType: 'json',
     error: onError,
     success: onSuccess,
