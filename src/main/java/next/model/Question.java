@@ -16,6 +16,6 @@ public class Question {
     private final String title;
     private final String contents;
     private final Timestamp createdAt;
-    private Timestamp updatedAt;
+    private final Timestamp updatedAt;
 
 }
