@@ -19,14 +19,14 @@ public class QuestionController implements Controller {
     private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         QuestionDao questionDao = new QuestionDao();
-        if (this.isPost(request)) {
+        if (isPost(request)) {
             String writer = request.getParameter("writer");
             String title = request.getParameter("title");
             String contents = request.getParameter("contents");
             Timestamp createdAt = Timestamp.from(Instant.now());
-            Question question = new Question(writer, title, contents, createdAt);
+            Timestamp updatedAt = Timestamp.from(Instant.now());
+            Question question = new Question(writer, title, contents, createdAt, updatedAt);
             log.debug("question: {}", question);
 
             Question savedQuestion = questionDao.save(question);
