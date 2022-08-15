@@ -1,9 +1,8 @@
 package core.jdbc;
 
+import next.dao.PreparedStatementCreator;
 import next.dao.PreparedStatementSetter;
 import next.dao.RowMapper;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
