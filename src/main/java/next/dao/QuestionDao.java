@@ -6,6 +6,7 @@ import next.model.Question;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class QuestionDao {
 
@@ -59,5 +60,20 @@ public class QuestionDao {
                 resultSet.getTimestamp("updatedAt")
         );
         return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
+    }
+
+    public List<Question> findAll() throws SQLException {
+        RowMapper<Question> rowMapper = resultSet -> new Question(
+                resultSet.getLong("id"),
+                resultSet.getString("writer"),
+                resultSet.getString("title"),
+                resultSet.getString("contents"),
+                resultSet.getTimestamp("createdAt"),
+                resultSet.getTimestamp("updatedAt"))
+                ;
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
+        String sql = "SELECT id, writer, title, contents, createdAt, updatedAt FROM QUESTION";
+        return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 }
