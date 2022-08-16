@@ -25,9 +25,12 @@ function addQuestion(e) {
     type: 'post',
     url: '/qna/questions',
     data: params,
-    dataType: 'json',
-    error: onError,
-    success: onSuccess,
+    error: function (xhr, status) {
+      alert("error");
+    },
+    success: function (json, status) {
+      window.location = "http://localhost:8080/"
+    },
   })
 }
 
