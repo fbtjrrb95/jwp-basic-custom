@@ -48,6 +48,26 @@
                       </div>
                   </div>
               </li>
+              <c:forEach items="${questions}" var="question">
+                  <li>
+                      <div class="wrap">
+                          <div class="main">
+                              <strong class="subject">
+                                  <a href="/qna">${question.title}</a>
+                              </strong>
+                              <div class="auth-info">
+                                  <i class="icon-add-comment"></i>
+                                  <span class="time">${question.createdAt}</span>
+                                  <a href="/users/profile" class="author">${question.writer}</a>
+                              </div>
+                              <div class="reply" title="댓글">
+                                  <i class="icon-reply"></i>
+                                  <span class="point">12</span>
+                              </div>
+                          </div>
+                      </div>
+                  </li>
+              </c:forEach>
           </ul>
           <div class="row">
               <div class="col-md-3"></div>
