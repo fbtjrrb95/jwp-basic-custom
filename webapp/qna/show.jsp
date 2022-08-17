@@ -25,7 +25,7 @@
                         <div class="article-header-text">
                             <a href="/users/92/kimmunsu" class="article-author-name">${question.writer}</a>
                             <a href="/questions/413" class="article-header-time" title="퍼머링크">
-                                <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${question.createdDate}" />
+                                <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${question.createdAt}" />
                                 <i class="icon-link"></i>
                             </a>
                         </div>
@@ -53,7 +53,7 @@
 
                 <div class="qna-comment">
                     <div class="qna-comment-slipp">
-                        <p class="qna-comment-count"><strong>${question.countOfComment}</strong>개의 의견</p>
+<%--                        <p class="qna-comment-count"><strong>${question.countOfComment}</strong>개의 의견</p>--%>
                         <div class="qna-comment-slipp-articles">
                             <c:forEach items="${answers}" var="each">
                                 <article class="article">
@@ -86,7 +86,7 @@
                             </c:forEach>
                             <div class="answerWrite">
                                 <form name="answer" method="post">
-                                    <input type="hidden" name="questionId" value="${question.questionId}">
+                                    <input type="hidden" name="questionId" value="${question.id}">
                                     <div class="form-group col-lg-4" style="padding-top:10px;">
                                         <input class="form-control" id="writer" name="writer" placeholder="이름">
                                     </div>
