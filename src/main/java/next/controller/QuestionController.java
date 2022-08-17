@@ -36,6 +36,16 @@ public class QuestionController implements Controller {
             printWriter.print(Arrays.toString(objectMapper.writeValueAsBytes(savedQuestion)));
             return null;
         }
+        if (isGet(request)) {
+            String questionId = request.getParameter("questionId");
+            if (questionId != null) {
+                Question question = questionDao.findById(Long.parseLong(questionId));
+                request.setAttribute("question", question);
+                return "/qna/show.jsp";
+            }
+
+            throw new NotFoundException("NOT FOUND");
+        }
         throw new NotFoundException("NOT FOUND");
     }
 }
