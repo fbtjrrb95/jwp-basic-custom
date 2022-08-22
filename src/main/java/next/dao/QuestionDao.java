@@ -28,17 +28,14 @@ public class QuestionDao {
     public Question save(Question question) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "INSERT INTO QUESTION (writer, title, contents, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatementCreator psc = new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement pstmt = con.prepareStatement(sql);
-                pstmt.setString(1, question.getWriter());
-                pstmt.setString(2, question.getTitle());
-                pstmt.setString(3, question.getContents());
-                pstmt.setTimestamp(4, question.getCreatedAt());
-                pstmt.setTimestamp(5, question.getUpdatedAt());
-                return pstmt;
-            }
+        PreparedStatementCreator psc = con -> {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, question.getWriter());
+            pstmt.setString(2, question.getTitle());
+            pstmt.setString(3, question.getContents());
+            pstmt.setTimestamp(4, question.getCreatedAt());
+            pstmt.setTimestamp(5, question.getUpdatedAt());
+            return pstmt;
         };
 
         Long generatedId = jdbcTemplate.update(psc);
