@@ -10,21 +10,6 @@ import java.util.List;
 
 public class QuestionDao {
 
-//    public Question save(Question question) throws SQLException {
-//        String sql = "INSERT INTO QUESTION (writer, title, contents, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
-//        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
-//        KeyHolder keyHolder = new KeyHolder();
-//        jdbcTemplate.insert(
-//                sql,
-//                keyHolder,
-//                question.getWriter(),
-//                question.getTitle(),
-//                question.getContents(),
-//                question.getCreatedAt(),
-//                question.getUpdatedAt());
-//        return findById(keyHolder.getId());
-//    }
-
     public Question save(Question question) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "INSERT INTO QUESTION (writer, title, contents, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
