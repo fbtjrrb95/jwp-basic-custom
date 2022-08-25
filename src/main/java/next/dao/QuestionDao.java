@@ -10,7 +10,7 @@ import java.util.List;
 public class QuestionDao {
 
     public Question save(Question question) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "INSERT INTO QUESTION (writer, title, contents, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
         PreparedStatementCreator psc = con -> {
             PreparedStatement pstmt = con.prepareStatement(sql);
