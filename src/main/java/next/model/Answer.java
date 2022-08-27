@@ -16,6 +16,6 @@ public class Answer {
     private final String contents;
     private final Long questionId;
     private final Timestamp createdAt;
-    private Timestamp updatedAt;
+    private final Timestamp updatedAt;
     
 }

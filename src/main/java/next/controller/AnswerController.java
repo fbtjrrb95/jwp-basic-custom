@@ -26,11 +26,12 @@ public class AnswerController implements Controller {
             String contents = request.getParameter("contents");
             Long questionId = Long.parseLong(request.getParameter("questionId"));
             Timestamp createdAt = Timestamp.from(Instant.now());
-            Answer answer = new Answer(writer, contents, questionId, createdAt);
+            Timestamp updatedAt = Timestamp.from(Instant.now());
+            Answer answer = new Answer(writer, contents, questionId, createdAt, updatedAt);
             log.debug("answer: {}", answer);
 
             AnswerDao answerDao = new AnswerDao();
-            Answer savedAnswer = answerDao.insert(answer);
+            Answer savedAnswer = answerDao.save(answer);
             ObjectMapper objectMapper = new ObjectMapper();
             response.setContentType(CONTENT_TYPE);
             PrintWriter printWriter = response.getWriter();
