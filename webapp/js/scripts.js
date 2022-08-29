@@ -11,8 +11,14 @@ function addAnswer(e) {
     url: '/qna/answers',
     data: params,
     dataType: 'json',
-    error: onError,
-    success: onSuccess,
+    error: (xhr, status) => {
+      alert("error");
+    },
+    success: (json, status) => {
+      const answerTemplate = $('#answerTemplate').html();
+      const template = answerTemplate.format(json.writer, new Date(json.createdAt), json.contents, json.id, json.id);
+      $(".qna-comment-slipp-articles").prepend(template);
+    },
   })
 }
 
@@ -25,10 +31,10 @@ function addQuestion(e) {
     type: 'post',
     url: '/qna/questions',
     data: params,
-    error: function (xhr, status) {
+    error: (xhr, status) => {
       alert("error");
     },
-    success: function (json, status) {
+    success: (json, status) => {
       window.location = "http://localhost:8080/"
     },
   })
@@ -40,13 +46,3 @@ String.prototype.format = function () {
     return typeof args[number] != 'undefined' ? args[number] : match;
   });
 };
-
-function onSuccess(json, status) {
-  const answerTemplate = $('#answerTemplate').html();
-  const template = answerTemplate.format(json.writer, new Date(json.createdAt), json.contents, json.id, json.id);
-  $(".qna-comment-slipp-articles").prepend(template);
-}
-
-function onError(xhr, status) {
-  alert("error");
-}
