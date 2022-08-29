@@ -33,7 +33,7 @@ public class QuestionController implements Controller {
             ObjectMapper objectMapper = new ObjectMapper();
             response.setContentType(CONTENT_TYPE);
             PrintWriter printWriter = response.getWriter();
-            printWriter.print(Arrays.toString(objectMapper.writeValueAsBytes(savedQuestion)));
+            printWriter.print(objectMapper.writeValueAsString(savedQuestion));
             return null;
         }
         if (isGet(request)) {
