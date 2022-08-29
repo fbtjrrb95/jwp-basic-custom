@@ -42,8 +42,8 @@ String.prototype.format = function () {
 };
 
 function onSuccess(json, status) {
-  const answerTemplate = $("#answerTemplate").html();
-  const template = answerTemplate.format(json.writer, new Date(json.createdDate), json.contents, json.answerId);
+  const answerTemplate = $('#answerTemplate').html();
+  const template = answerTemplate.format(json.writer, new Date(json.createdAt), json.contents, json.id, json.id);
   $(".qna-comment-slipp-articles").prepend(template);
 }
 

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Locale;
 
 public class AnswerController implements Controller {
@@ -35,7 +34,7 @@ public class AnswerController implements Controller {
             ObjectMapper objectMapper = new ObjectMapper();
             response.setContentType(CONTENT_TYPE);
             PrintWriter printWriter = response.getWriter();
-            printWriter.print(Arrays.toString(objectMapper.writeValueAsBytes(savedAnswer)));
+            printWriter.print(objectMapper.writeValueAsString(savedAnswer));
             return null;
         }
 
