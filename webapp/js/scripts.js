@@ -17,7 +17,9 @@ function addAnswer(e) {
     success: (json, status) => {
       const answerTemplate = $('#answerTemplate').html();
       const template = answerTemplate.format(json.writer, new Date(json.createdAt), json.contents, json.id, json.id);
-      $(".qna-comment-slipp-articles").prepend(template);
+      $('.qna-comment-slipp-articles').prepend(template);
+      $('#writer').val('');
+      $('#contents').val('');
     },
   })
 }
