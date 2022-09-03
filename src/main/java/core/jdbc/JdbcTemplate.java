@@ -59,6 +59,7 @@ public class JdbcTemplate {
             }
             throw new SQLException("no data available");
         } finally {
+            assert rs != null;
             rs.close();
         }
     }
