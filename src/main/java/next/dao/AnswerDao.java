@@ -2,9 +2,11 @@ package next.dao;
 
 import core.jdbc.JdbcTemplate;
 import next.model.Answer;
+import org.springframework.objenesis.instantiator.android.AndroidSerializationInstantiator;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class AnswerDao {
 
@@ -40,5 +42,22 @@ public class AnswerDao {
                 resultSet.getTimestamp("updatedAt")
         );
         return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
+    }
+
+    public List<Answer> findByQuestionId(long questionId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE questinoId = ?";
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setLong(1, questionId);
+        };
+        RowMapper<Answer> rowMapper = resultSet -> new Answer(
+                resultSet.getLong("id"),
+                resultSet.getString("writer"),
+                resultSet.getString("contents"),
+                resultSet.getLong("questionId"),
+                resultSet.getTimestamp("createdAt"),
+                resultSet.getTimestamp("updatedAt")
+        );
+        return jdbcTemplate.query(sql, preparedStatementSetter, rowMapper);
     }
 }
