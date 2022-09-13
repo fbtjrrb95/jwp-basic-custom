@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="article-header-text">
                                                 ${each.writer}
-                                            <div class="article-header-time"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdDate}" /></div>
+                                            <div class="article-header-time"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdAt}" /></div>
                                         </div>
                                     </div>
                                     <div class="article-doc comment-doc">
@@ -72,11 +72,11 @@
                                     <div class="article-util">
                                         <ul class="article-util-list">
                                             <li>
-                                                <a class="link-modify-article" href="/api/qna/updateAnswer?answerId=${each.answerId}">수정</a>
+                                                <a class="link-modify-article" href="/api/qna/updateAnswer?answerId=${each.id}">수정</a>
                                             </li>
                                             <li>
                                                 <form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
-                                                    <input type="hidden" name="answerId" value="${each.answerId}" />
+                                                    <input type="hidden" name="answerId" value="${each.id}" />
                                                     <button type="submit" class="link-delete-article">삭제</button>
                                                 </form>
                                             </li>
