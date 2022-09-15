@@ -46,7 +46,7 @@ public class AnswerDao {
 
     public List<Answer> findByQuestionId(long questionId) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE questinoId = ?";
+        String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE questionId = ?";
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setLong(1, questionId);
         };
