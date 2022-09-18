@@ -2,7 +2,6 @@ package next.dao;
 
 import core.jdbc.JdbcTemplate;
 import next.model.Answer;
-import org.springframework.objenesis.instantiator.android.AndroidSerializationInstantiator;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
