@@ -44,7 +44,7 @@ public class QuestionController implements Controller {
         }
         if (isGet(request)) {
             String questionId = request.getParameter("questionId");
-            if (StringUtils.isEmpty(questionId)) {
+            if (!StringUtils.isEmpty(questionId)) {
                 Question question = questionDao.findById(Long.parseLong(questionId));
                 request.setAttribute("question", question);
 
