@@ -1,8 +1,8 @@
 $(".answerWrite input[type=submit]").click(addAnswer);
 $(".questionWrite input[type=submit]").click(addQuestion);
+$(".qna-comment").on("click", ".answerDelete", deleteAnswer);
 
 function addAnswer(e) {
-  console.log('add answer function');
   e.preventDefault();
   const params = $("form[name=answer]").serialize();
 
@@ -25,7 +25,6 @@ function addAnswer(e) {
 }
 
 function addQuestion(e) {
-  console.log('add question function');
   e.preventDefault();
   const params = $("form[name=question]").serialize();
 
@@ -38,6 +37,23 @@ function addQuestion(e) {
     },
     success: (json, status) => {
       window.location = "http://localhost:8080/"
+    },
+  })
+}
+
+function deleteAnswer(e) {
+  console.log('clicked delete answer button');
+  e.preventDefault();
+  const answerId = $(this).closest('div').find('input[name=answerId]').val();
+  console.log('selected answer id: ', answerId);
+  $.ajax({
+    type: 'delete',
+    url: '/qna/answers/' + answerId,
+    error: (xhr, status) => {
+      alert('error');
+    },
+    success: (json, status) => {
+      alert('success');
     },
   })
 }

@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -75,10 +74,10 @@
                                                 <a class="link-modify-article" href="/api/qna/updateAnswer?answerId=${each.id}">수정</a>
                                             </li>
                                             <li>
-                                                <form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
+                                                <div class="answerDelete">
                                                     <input type="hidden" name="answerId" value="${each.id}" />
                                                     <button type="submit" class="link-delete-article">삭제</button>
-                                                </form>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -125,10 +124,10 @@
                     <a class="link-modify-article" href="/api/qna/updateAnswer/{3}">수정</a>
                 </li>
                 <li>
-                    <form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
+                    <div class="answerDelete">
                         <input type="hidden" name="answerId" value="{4}" />
                         <button type="submit" class="link-delete-article">삭제</button>
-                    </form>
+                    </div>
                 </li>
             </ul>
         </div>
