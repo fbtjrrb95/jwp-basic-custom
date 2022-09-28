@@ -6,6 +6,7 @@ import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,7 @@ public class QuestionController implements Controller {
         }
         if (isGet(request)) {
             String questionId = request.getParameter("questionId");
-            if (questionId != null) {
+            if (StringUtils.isEmpty(questionId)) {
                 Question question = questionDao.findById(Long.parseLong(questionId));
                 request.setAttribute("question", question);
 
