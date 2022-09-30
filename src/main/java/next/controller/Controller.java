@@ -15,4 +15,8 @@ public interface Controller {
     default boolean isPost(HttpServletRequest request) {
         return Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.POST);
     }
+
+    default boolean isDelete(HttpServletRequest request) {
+        return Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.DELETE);
+    }
 }
