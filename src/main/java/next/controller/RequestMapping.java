@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RequestMapping {
 
@@ -26,10 +28,13 @@ public class RequestMapping {
         map.put("/users/profile", new ProfileController());
         map.put("/qna/answers", new AnswerController());
         map.put("/qna/questions", new QuestionController());
-
     }
 
     public Controller getController(String url) {
-        return map.get(url);
+        List<String> list = map.keySet().stream()
+                .filter(url::startsWith)
+                .collect(Collectors.toList());
+        if (list == null || list.isEmpty()) return null;
+        return map.get(list.get(0));
     }
 }
