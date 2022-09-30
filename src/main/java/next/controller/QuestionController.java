@@ -47,15 +47,12 @@ public class QuestionController implements Controller {
             if (!StringUtils.isEmpty(questionId)) {
                 Question question = questionDao.findById(Long.parseLong(questionId));
                 request.setAttribute("question", question);
-
                 if (question != null) {
                     List<Answer> answers = answerDao.findByQuestionId(question.getId());
                     request.setAttribute("answers", answers);
                 }
-
                 return "/qna/show.jsp";
             }
-
             throw new NotFoundException("NOT FOUND");
         }
         throw new NotFoundException("NOT FOUND");
