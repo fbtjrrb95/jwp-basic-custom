@@ -3,6 +3,7 @@ package next.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +28,15 @@ public class RequestMapping {
         map.put("/users/update", new UpdateUserController());
         map.put("/users/profile", new ProfileController());
         map.put("/qna/answers", new AnswerController());
+        map.put("/qna/answers/", new AnswerDetailController());
         map.put("/qna/questions", new QuestionController());
+
     }
 
     public Controller getController(String url) {
         List<String> list = map.keySet().stream()
                 .filter(url::startsWith)
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
         if (list == null || list.isEmpty()) return null;
         return map.get(list.get(0));
