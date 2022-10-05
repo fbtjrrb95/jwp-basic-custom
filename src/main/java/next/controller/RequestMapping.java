@@ -38,7 +38,7 @@ public class RequestMapping {
                 .filter(url::startsWith)
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
-        if (list == null || list.isEmpty()) return null;
+        if (list.isEmpty()) return null;
         return map.get(list.get(0));
     }
 }
