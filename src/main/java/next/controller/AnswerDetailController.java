@@ -1,6 +1,7 @@
 package next.controller;
 
 import javassist.NotFoundException;
+import next.dao.AnswerDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,14 +22,16 @@ public class AnswerDetailController implements Controller {
         }
         if (isDelete(request)) {
             String answerIdString = request.getRequestURI().substring(prefix.length());
-            Integer integer;
+            Long answerId;
             try {
-                integer = Integer.valueOf(answerIdString);
+                answerId = Long.valueOf(answerIdString);
             } catch (NumberFormatException e) {
-                // TODO: return 404
+                // TODO: return 404 status code
                 throw new NotFoundException("NOT FOUND");
             }
-            log.info("delete answer id: {}", integer);
+            log.info("delete answer id: {}", answerId);
+            AnswerDao answerDao = new AnswerDao();
+            answerDao.delete(answerId);
             return null;
         }
         throw new NotFoundException("NOT FOUND");
