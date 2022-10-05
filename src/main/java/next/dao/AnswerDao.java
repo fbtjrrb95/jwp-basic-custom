@@ -59,4 +59,10 @@ public class AnswerDao {
         );
         return jdbcTemplate.query(sql, preparedStatementSetter, rowMapper);
     }
+
+    public void delete(Long answerId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "DELETE FROM Answer WHERE id = ?";
+        jdbcTemplate.update(sql, answerId);
+    }
 }
