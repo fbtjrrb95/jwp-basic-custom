@@ -44,15 +44,16 @@ function addQuestion(e) {
 function deleteAnswer(e) {
   console.log('clicked delete answer button');
   e.preventDefault();
-  const answerId = $(this).closest('div').find('input[name=answerId]').val();
-  console.log('selected answer id: ', answerId);
+  const targetAnswerId = $(this).closest('div').find('input[name=answerId]').val();
+  const targetAnswerDoc = $(this).closest('.article');
   $.ajax({
     type: 'delete',
-    url: '/qna/answers/' + answerId,
+    url: '/qna/answers/' + targetAnswerId,
     error: (xhr, status) => {
       alert('error');
     },
     success: (json, status) => {
+      targetAnswerDoc.remove();
       alert('success');
     },
   })
