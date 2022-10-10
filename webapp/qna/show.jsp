@@ -38,10 +38,10 @@
                                 <a class="link-modify-article" href="#">수정</a>
                             </li>
                             <li>
-                                <form class="form-delete" action="#" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE">
+                                <div class="question-delete">
+                                    <input type="hidden" name="questionId" value="${question.id}">
                                     <button class="link-delete-article" type="submit">삭제</button>
-                                </form>
+                                </div>
                             </li>
                             <li>
                                 <a class="link-modify-article" href="/">목록</a>

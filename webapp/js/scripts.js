@@ -1,5 +1,6 @@
 $(".answerWrite input[type=submit]").click(addAnswer);
 $(".questionWrite input[type=submit]").click(addQuestion);
+$(".question-delete button[type=submit]").click(deleteQuestion);
 $(".qna-comment").on("click", ".answerDelete", deleteAnswer);
 
 function addAnswer(e) {
@@ -42,21 +43,36 @@ function addQuestion(e) {
 }
 
 function deleteAnswer(e) {
-  console.log('clicked delete answer button');
   e.preventDefault();
-  const targetAnswerId = $(this).closest('div').find('input[name=answerId]').val();
-  const targetAnswerDoc = $(this).closest('.article');
+  const answerId = $(this).closest('div').find('input[name=answerId]').val();
+  const document = $(this).closest('.article');
   $.ajax({
     type: 'delete',
-    url: '/qna/answers/' + targetAnswerId,
+    url: '/qna/answers/' + answerId,
     error: (xhr, status) => {
       alert('error');
     },
     success: (json, status) => {
-      targetAnswerDoc.remove();
+      document.remove();
       alert('success');
     },
   })
+}
+
+function deleteQuestion(e) {
+  e.preventDefault();
+  const questionId = $(this).closest('div').find('input[name=questionId]').val();
+  $.ajax({
+    type: 'delete',
+    url: '/qna/questions/' + questionId,
+    error: (xhr, status) => {
+      alert('error');
+    },
+    success: (json, status) => {
+      window.location = "http://localhost:8080/"
+    },
+  })
+
 }
 
 String.prototype.format = function () {
