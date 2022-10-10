@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Locale;
 
 public class AnswerController implements Controller {
     private static final Logger log =
@@ -20,7 +19,7 @@ public class AnswerController implements Controller {
     private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.POST)) {
+        if (isPost(request)) {
             String writer = request.getParameter("writer");
             String contents = request.getParameter("contents");
             Long questionId = Long.parseLong(request.getParameter("questionId"));
@@ -38,7 +37,7 @@ public class AnswerController implements Controller {
             return null;
         }
 
-        if (Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.GET)) {
+        if (isGet(request)) {
             return null;
         }
         throw new NotFoundException("NOT FOUND");
