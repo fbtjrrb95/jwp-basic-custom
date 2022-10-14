@@ -72,7 +72,6 @@ function deleteQuestion(e) {
       window.location = "http://localhost:8080/"
     },
   })
-
 }
 
 String.prototype.format = function () {
