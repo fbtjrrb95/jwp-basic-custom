@@ -1,8 +1,5 @@
 package next.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class RequestMapping {
 
-    private static final Logger log = LoggerFactory.getLogger(RequestMapping.class);
     private static final Map<String, Controller> map = new HashMap<>();
 
     void init() {
@@ -30,7 +26,7 @@ public class RequestMapping {
         map.put("/qna/answers", new AnswerController());
         map.put("/qna/answers/", new AnswerDetailController());
         map.put("/qna/questions", new QuestionController());
-
+        map.put("/qna/questions/", new QuestionDetailController());
     }
 
     public Controller getController(String url) {
