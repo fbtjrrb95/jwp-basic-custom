@@ -38,8 +38,7 @@ public class QuestionDao {
                 resultSet.getString("title"),
                 resultSet.getString("contents"),
                 resultSet.getTimestamp("createdAt"),
-                resultSet.getTimestamp("updatedAt")
-        );
+                resultSet.getTimestamp("updatedAt"));
         return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
 
@@ -50,11 +49,16 @@ public class QuestionDao {
                 resultSet.getString("title"),
                 resultSet.getString("contents"),
                 resultSet.getTimestamp("createdAt"),
-                resultSet.getTimestamp("updatedAt"))
-                ;
+                resultSet.getTimestamp("updatedAt"));
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT id, writer, title, contents, createdAt, updatedAt FROM QUESTION";
         return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
+    }
+
+    public void delete(Long questionId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "DELETE FROM Question WHERE id = ?";
+        jdbcTemplate.update(sql, questionId);
     }
 }
