@@ -38,16 +38,13 @@ public class DispatcherServlet extends HttpServlet {
             log.error("Exception : {}", e.toString());
             throw new ServletException(e.getMessage());
         }
-
     }
 
     private void move(String viewName, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
         if (viewName.startsWith(DEFAULT_REDIRECT_PREFIX)) {
             response.sendRedirect(viewName.substring(DEFAULT_REDIRECT_PREFIX.length()));
             return;
         }
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(viewName);
         requestDispatcher.forward(request, response);
     }

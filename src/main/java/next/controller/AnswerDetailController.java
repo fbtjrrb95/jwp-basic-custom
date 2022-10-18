@@ -14,19 +14,12 @@ public class AnswerDetailController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (isGet(request)) {
-            return null;
-        }
-        if (isPost(request)) {
-            return null;
-        }
         if (isDelete(request)) {
             String answerIdString = request.getRequestURI().substring(prefix.length());
             Long answerId;
             try {
                 answerId = Long.valueOf(answerIdString);
             } catch (NumberFormatException e) {
-                // TODO: return 404 status code
                 throw new NotFoundException("NOT FOUND");
             }
             log.info("delete answer id: {}", answerId);

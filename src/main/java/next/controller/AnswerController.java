@@ -36,10 +36,6 @@ public class AnswerController implements Controller {
             printWriter.print(objectMapper.writeValueAsString(savedAnswer));
             return null;
         }
-
-        if (isGet(request)) {
-            return null;
-        }
         throw new NotFoundException("NOT FOUND");
     }
 }
