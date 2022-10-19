@@ -2,6 +2,8 @@ package next.controller;
 
 import next.dao.UserDao;
 import next.model.User;
+import next.view.JspView;
+import next.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +16,7 @@ public class LoginController implements Controller {
 
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
@@ -23,17 +25,17 @@ public class LoginController implements Controller {
 
         if (user == null) {
             log.error("no user by userId, {}", userId);
-            return "/user/login.jsp";
+            return JspView.of("/user/login.jsp");
         }
 
         if (!user.matchPassword(password)) {
             log.error("invalid password");
-            return "/user/login.jsp";
+            return JspView.of("/user/login.jsp");
         }
 
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
-        return "redirect:/";
+        return JspView.of("redirect:/");
     }
 }
