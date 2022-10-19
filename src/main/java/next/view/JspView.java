@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class JspView implements View {
     private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
-    private static Map<String, JspView> jspViewFactory = new HashMap<>();
+    private static final Map<String, JspView> jspViewFactory = new HashMap<>();
 
     private String viewName;
     private JspView(String viewName) {
