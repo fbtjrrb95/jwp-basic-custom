@@ -6,6 +6,8 @@ import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
+import next.view.JspView;
+import next.view.View;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
 // TODO: change QnAController
@@ -23,7 +24,7 @@ public class QuestionController implements Controller {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
     private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         QuestionDao questionDao = new QuestionDao();
         AnswerDao answerDao = new AnswerDao();
         if (isPost(request)) {
@@ -53,7 +54,7 @@ public class QuestionController implements Controller {
                 List<Answer> answers = answerDao.findByQuestionId(question.getId());
                 request.setAttribute("answers", answers);
             }
-            return "/qna/show.jsp";
+            return JspView.of( "/qna/show.jsp");
         }
         throw new NotFoundException("NOT FOUND");
     }

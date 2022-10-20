@@ -2,6 +2,8 @@ package next.controller;
 
 import next.dao.UserDao;
 import next.model.User;
+import next.view.JspView;
+import next.view.View;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,7 @@ import java.util.Objects;
 public class UpdateUserController implements Controller {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String userId = request.getParameter("userId");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
@@ -22,11 +24,11 @@ public class UpdateUserController implements Controller {
         User userBySession = (User) session.getAttribute("user");
 
         if (userBySession == null || !Objects.equals(userId, userBySession.getUserId())) {
-            return "/user/update.jsp";
+            return JspView.of("/user/update.jsp");
         }
 
         if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(name) || StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
-            return "/user/update.jsp";
+            return JspView.of("/user/update.jsp");
         }
 
         UserDao userDao = new UserDao();
@@ -35,9 +37,8 @@ public class UpdateUserController implements Controller {
         user.setEmail(email);
         user.setName(name);
         user.setPassword(password);
-
         userDao.update(user);
 
-        return "redirect:/users";
+        return JspView.of("redirect:/users");
     }
 }
