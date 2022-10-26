@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
 import next.dao.AnswerDao;
 import next.model.Answer;
+import next.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ public class AnswerController implements Controller {
             LoggerFactory.getLogger(AnswerController.class);
     private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isPost(request)) {
             String writer = request.getParameter("writer");
             String contents = request.getParameter("contents");

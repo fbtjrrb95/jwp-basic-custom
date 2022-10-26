@@ -2,6 +2,7 @@ package next.controller;
 
 import javassist.NotFoundException;
 import next.dao.AnswerDao;
+import next.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,7 @@ public class AnswerDetailController implements Controller {
     private final String prefix = "/qna/answers/";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isDelete(request)) {
             String answerIdString = request.getRequestURI().substring(prefix.length());
             Long answerId;
