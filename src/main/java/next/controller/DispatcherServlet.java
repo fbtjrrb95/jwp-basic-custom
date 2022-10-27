@@ -1,5 +1,6 @@
 package next.controller;
 
+import next.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,6 @@ import java.io.IOException;
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
-    private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
 
     private RequestMapping map;
 
@@ -30,24 +30,13 @@ public class DispatcherServlet extends HttpServlet {
 
         Controller controller = map.getController(uri);
         try {
-            String viewName = controller.execute(request, response);
-            if (viewName != null) {
-                move(viewName, request, response);
+            View view = controller.execute(request, response);
+            if (view != null) {
+                view.render(request, response);
             }
         } catch (Exception e) {
             log.error("Exception : {}", e.toString());
             throw new ServletException(e.getMessage());
         }
     }
-
-    private void move(String viewName, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (viewName.startsWith(DEFAULT_REDIRECT_PREFIX)) {
-            response.sendRedirect(viewName.substring(DEFAULT_REDIRECT_PREFIX.length()));
-            return;
-        }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(viewName);
-        requestDispatcher.forward(request, response);
-    }
-
-
 }
