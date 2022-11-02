@@ -23,7 +23,7 @@ public class AnswerDetailController implements Controller {
             } catch (NumberFormatException e) {
                 throw new NotFoundException("NOT FOUND");
             }
-            log.info("delete answer id: {}", answerId);
+            log.debug("delete answer id: {}", answerId);
             AnswerDao answerDao = new AnswerDao();
             answerDao.delete(answerId);
             return null;
