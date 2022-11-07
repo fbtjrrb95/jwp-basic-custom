@@ -2,6 +2,7 @@ package next.controller;
 
 import javassist.NotFoundException;
 import next.dao.QuestionDao;
+import next.view.JsonView;
 import next.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class QuestionDetailController implements Controller {
             log.info("delete question id: {}", questionId);
             QuestionDao questionDao = new QuestionDao();
             questionDao.delete(questionId);
-            return null;
+            return new JsonView();
         }
         throw new NotFoundException("NOT FOUND");
     }
