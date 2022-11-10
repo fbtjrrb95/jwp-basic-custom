@@ -6,6 +6,7 @@ import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
+import next.view.JsonView;
 import next.view.JspView;
 import next.view.View;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,6 @@ import java.util.List;
 // TODO: change QnAController
 public class QuestionController implements Controller {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
-    private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
     @Override
     public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         QuestionDao questionDao = new QuestionDao();
@@ -37,11 +37,8 @@ public class QuestionController implements Controller {
             log.debug("question: {}", question);
 
             Question savedQuestion = questionDao.save(question);
-            ObjectMapper objectMapper = new ObjectMapper();
-            response.setContentType(CONTENT_TYPE);
-            PrintWriter printWriter = response.getWriter();
-            printWriter.print(objectMapper.writeValueAsString(savedQuestion));
-            return null;
+            request.setAttribute("question", savedQuestion);
+            return new JsonView();
         }
         if (isGet(request)) {
             String questionId = request.getParameter("questionId");
