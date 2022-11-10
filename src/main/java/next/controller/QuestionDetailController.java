@@ -24,7 +24,7 @@ public class QuestionDetailController implements Controller {
             } catch (NumberFormatException e) {
                 throw new NotFoundException("NOT FOUND");
             }
-            log.info("delete question id: {}", questionId);
+            log.debug("delete question id: {}", questionId);
             QuestionDao questionDao = new QuestionDao();
             questionDao.delete(questionId);
             return new JsonView();
