@@ -1,30 +1,26 @@
 package next.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
 import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
-import next.view.JsonView;
-import next.view.JspView;
-import next.view.View;
+import next.view.ModelAndView;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
 // TODO: change QnAController
-public class QuestionController implements Controller {
+public class QuestionController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
     @Override
-    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         QuestionDao questionDao = new QuestionDao();
         AnswerDao answerDao = new AnswerDao();
         if (isPost(request)) {
@@ -37,21 +33,21 @@ public class QuestionController implements Controller {
             log.debug("question: {}", question);
 
             Question savedQuestion = questionDao.save(question);
-            request.setAttribute("question", savedQuestion);
-            return new JsonView();
+            return jsonView().addObject("question", savedQuestion);
         }
         if (isGet(request)) {
             String questionId = request.getParameter("questionId");
             if (StringUtils.isEmpty(questionId)) {
                 throw new NotFoundException("NOT FOUND");
             }
+            ModelAndView jspView = jspView("/qna/show.jsp");
             Question question = questionDao.findById(Long.parseLong(questionId));
-            request.setAttribute("question", question);
+            jspView.addObject("question", question);
             if (question != null) {
                 List<Answer> answers = answerDao.findByQuestionId(question.getId());
-                request.setAttribute("answers", answers);
+                jspView.addObject("answers", answers);
             }
-            return JspView.of( "/qna/show.jsp");
+            return jspView;
         }
         throw new NotFoundException("NOT FOUND");
     }

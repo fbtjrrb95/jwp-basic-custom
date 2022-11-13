@@ -11,7 +11,7 @@ import java.util.Map;
 public class ModelAndView {
     @Getter
     private final View view;
-    private Map<String, Object> model = new HashMap<>();
+    private final Map<String, Object> model = new HashMap<>();
 
     public ModelAndView addObject(String name, Object value) {
         model.put(name, value);

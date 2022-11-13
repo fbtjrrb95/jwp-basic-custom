@@ -3,15 +3,16 @@ package next.controller;
 import next.dao.UserDao;
 import next.model.User;
 import next.view.JspView;
+import next.view.ModelAndView;
 import next.view.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ProfileController implements Controller {
+public class ProfileController extends AbstractController {
 
     @Override
-    public View execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         UserDao userDao = new UserDao();
         String userId = request.getParameter("userId");
@@ -19,7 +20,6 @@ public class ProfileController implements Controller {
 
         if (user == null) throw new IllegalArgumentException("No Valid User Id");
 
-        request.setAttribute("user", user);
-        return JspView.of("/user/profile.jsp");
+        return jspView("/user/profile.jsp").addObject("user", user);
     }
 }
