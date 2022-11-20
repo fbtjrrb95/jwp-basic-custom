@@ -33,6 +33,8 @@ public class DispatcherServlet extends HttpServlet {
             modelAndView = controller.execute(request, response);
             View view = modelAndView.getView();
             view.render(modelAndView.getModel(), request, response);
+        } catch (IllegalAccessException e) {
+            response.setStatus(403);
         } catch (Exception e) {
             log.error("Exception : {}", e.toString());
             throw new ServletException(e.getMessage());

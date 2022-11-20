@@ -9,8 +9,10 @@ public class ForwardController extends AbstractController {
     private String forwardUrl;
 
     public ForwardController(String forwardUrl) {
-        if (forwardUrl == null)
+        if (forwardUrl == null) {
             throw new NullPointerException("forwardUrl is null");
+        }
+
 
         this.forwardUrl = forwardUrl;
     }
