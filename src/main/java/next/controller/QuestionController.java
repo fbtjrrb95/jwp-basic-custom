@@ -5,7 +5,9 @@ import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
+import next.model.User;
 import next.view.ModelAndView;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,11 @@ public class QuestionController extends AbstractController {
         QuestionDao questionDao = new QuestionDao();
         AnswerDao answerDao = new AnswerDao();
         if (isPost(request)) {
+            User user = (User) request.getSession().getAttribute("user");
+            if (user == null || StringUtils.isEmpty(user.getUserId())) {
+                throw new IllegalAccessException("unavailable user");
+            }
+
             String writer = request.getParameter("writer");
             String title = request.getParameter("title");
             String contents = request.getParameter("contents");
