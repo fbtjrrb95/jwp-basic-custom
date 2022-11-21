@@ -35,7 +35,11 @@ function addQuestion(e) {
     url: '/qna/questions',
     data: params,
     error: (xhr, status) => {
-      alert("error");
+      if (xhr.status === 403) {
+        alert('forbidden');
+      } else {
+        alert('error');
+      }
     },
     success: (json, status) => {
       window.location = "http://localhost:8080/"
