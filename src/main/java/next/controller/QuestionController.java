@@ -21,17 +21,19 @@ import java.util.List;
 // TODO: change QnAController
 public class QuestionController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
+
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         QuestionDao questionDao = new QuestionDao();
         AnswerDao answerDao = new AnswerDao();
+
         if (isPost(request)) {
             User user = (User) request.getSession().getAttribute("user");
             if (user == null || StringUtils.isEmpty(user.getUserId())) {
                 throw new IllegalAccessException("unavailable user");
             }
 
-            String writer = request.getParameter("writer");
+            String writer = user.getName();
             String title = request.getParameter("title");
             String contents = request.getParameter("contents");
             Timestamp createdAt = Timestamp.from(Instant.now());
@@ -42,6 +44,7 @@ public class QuestionController extends AbstractController {
             Question savedQuestion = questionDao.save(question);
             return jsonView().addObject("question", savedQuestion);
         }
+
         if (isGet(request)) {
             String questionId = request.getParameter("questionId");
             if (StringUtils.isEmpty(questionId)) {

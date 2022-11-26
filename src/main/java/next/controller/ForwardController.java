@@ -13,7 +13,6 @@ public class ForwardController extends AbstractController {
             throw new NullPointerException("forwardUrl is null");
         }
 
-
         this.forwardUrl = forwardUrl;
     }
 
