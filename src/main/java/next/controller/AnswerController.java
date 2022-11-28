@@ -3,9 +3,9 @@ package next.controller;
 import javassist.NotFoundException;
 import next.dao.AnswerDao;
 import next.model.Answer;
-import next.view.JsonView;
+import next.model.User;
 import next.view.ModelAndView;
-import next.view.View;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,13 @@ public class AnswerController extends AbstractController {
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isPost(request)) {
-            String writer = request.getParameter("writer");
+
+            User user = (User) request.getSession().getAttribute("user");
+            if (user == null || StringUtils.isEmpty(user.getUserId())) {
+                throw new IllegalAccessException("unavailable user");
+            }
+
+            String writer = user.getName();
             String contents = request.getParameter("contents");
             Long questionId = Long.parseLong(request.getParameter("questionId"));
             Timestamp createdAt = Timestamp.from(Instant.now());
