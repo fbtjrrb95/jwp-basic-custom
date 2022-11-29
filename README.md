@@ -61,5 +61,54 @@ tomcat 이 root path 에 반환하는 view(html, htm, jsp) 를 welcomeFile 이�
  view와 model을 만드는 역할을 하는 데에 더 집중하는 저 클래스를 만들었고, 그래서 손쉽게 다양한 뷰에 대해 대응할 수 있었다.
  앞으로 이런 식의 여러 군데에서 중복된 코드가 발생하면 그 일만 하는 클래스를 만들고, 그것을 반환하건 인자로 넘기건 해서 처리하면 훨씬 유지보수가 편한 코드를 짤 수 있을 것 같다.
  
-## Tips
+## Memo
  if/else 문이 반복되는 문제를 해결하고 싶다면, 인터페이스를 추가하여 해결할 수 있음
+
+### 다음 코드가 멀티 스레드 환경에서 문제가 되는 이유
+```java
+public class ShowController extends AbstractController {
+   private QuestionDao questionDao = new QuestionDao();
+   private AnswerDao answerDao = new AnswerDao();
+   private Question question;
+   private List<Answer> answers;
+  
+   @Override
+   public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {
+      Long questionId = Long.parseLong(req.getParameter("questionId"));
+    
+      question = questionDao.findById(questionId); // 1
+      answers = answerDao.findAllByQuestionId(questionId); // 2
+    
+      ModelAndView mav = jspView("/qna/show.jsp");
+      mav.addObject("question", question);
+      mav.addObject("answers", answers);
+      return mav;
+   }
+}
+```
+
+question 변수와 answers 변수가 클래스 변수로 선언이 되어 멀티스레드에서 1, 2 과정에서 동시에 접근하여 변경할 수 있음
+그래서 특정 질문에 다른 답변이 노출될 수 있음
+
+아래의 코드로 변경해야 함
+```java
+public class ShowQuestionController extends AbstractController {
+    private QuestionDao questionDao = new QuestionDao();
+    private AnswerDao answerDao = new AnswerDao();
+
+    @Override
+    public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {
+        long questionId = Long.parseLong(req.getParameter("questionId"));
+
+        Question question = questionDao.findById(questionId);
+        List<Answer> answers = answerDao.findAllByQuestionId(questionId);
+
+        ModelAndView mav = jspView("/qna/show.jsp");
+        mav.addObject("question", question);
+        mav.addObject("answers", answers);
+        return mav;
+    }
+}
+```
+> 변수 선언할 때의 스코프는 최대한 적게 가져가는 것을 습관으로 하자!
+
