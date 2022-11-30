@@ -20,6 +20,8 @@ CREATE TABLE QUESTION (
     contents			varchar(5000)		NOT NULL,
     createdAt			timestamp			NOT NULL,
     updatedAt			timestamp			NOT NULL,
+    answerCount         bigint              NOT NULL DEFAULT 0,
+
     PRIMARY KEY               (id)
 );
 
@@ -32,5 +34,6 @@ CREATE TABLE ANSWER (
      createdAt			timestamp			NOT NULL,
      updatedAt			timestamp			NOT NULL,
      questionId			bigint				NOT NULL,
+
      PRIMARY KEY         (id)
 );
