@@ -28,7 +28,7 @@ public class QuestionDao {
 
     public Question findById(long id) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
-        String sql = "SELECT id, writer, title, contents, createdAt, updatedAt FROM Question WHERE id = ?";
+        String sql = "SELECT id, writer, title, contents, answerCount, createdAt, updatedAt FROM Question WHERE id = ?";
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setLong(1, id);
         };
@@ -37,8 +37,11 @@ public class QuestionDao {
                 resultSet.getString("writer"),
                 resultSet.getString("title"),
                 resultSet.getString("contents"),
+                resultSet.getLong("answerCount"),
                 resultSet.getTimestamp("createdAt"),
-                resultSet.getTimestamp("updatedAt"));
+                resultSet.getTimestamp("updatedAt")
+        );
+
         return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
 
@@ -48,11 +51,12 @@ public class QuestionDao {
                 resultSet.getString("writer"),
                 resultSet.getString("title"),
                 resultSet.getString("contents"),
+                resultSet.getLong("answerCount"),
                 resultSet.getTimestamp("createdAt"),
                 resultSet.getTimestamp("updatedAt"));
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
-        String sql = "SELECT id, writer, title, contents, createdAt, updatedAt FROM QUESTION";
+        String sql = "SELECT id, writer, title, contents, answerCount, createdAt, updatedAt FROM QUESTION";
         return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 

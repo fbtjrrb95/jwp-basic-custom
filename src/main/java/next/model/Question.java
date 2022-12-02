@@ -17,6 +17,7 @@ public class Question {
     private final String writer;
     private final String title;
     private final String contents;
+    private Long answerCount;
     private final Timestamp createdAt;
     private final Timestamp updatedAt;
 

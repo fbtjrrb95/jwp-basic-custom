@@ -18,9 +18,9 @@ CREATE TABLE QUESTION (
     writer				varchar(30)			NOT NULL,
     title				varchar(50)			NOT NULL,
     contents			varchar(5000)		NOT NULL,
+    answerCount         bigint              NOT NULL DEFAULT 0,
     createdAt			timestamp			NOT NULL,
     updatedAt			timestamp			NOT NULL,
-    answerCount         bigint              NOT NULL DEFAULT 0,
 
     PRIMARY KEY               (id)
 );
