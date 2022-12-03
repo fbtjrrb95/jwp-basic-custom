@@ -24,8 +24,8 @@ public class JdbcTemplate {
 
     public void update(String sql, Object... parameters) throws SQLException {
         try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
             for (int i = 0; i < parameters.length; i++) {
                 pstmt.setObject(i + 1, parameters[i]);
@@ -36,8 +36,8 @@ public class JdbcTemplate {
 
     public Long insert(String sql, Object... parameters) throws SQLException {
         try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
             for (int i = 0; i < parameters.length; i++) {
                 pstmt.setObject(i + 1, parameters[i]);
@@ -68,8 +68,8 @@ public class JdbcTemplate {
         ResultSet rs = null;
         try (
             Connection con = ConnectionManager.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(sql);
-        ){
+            PreparedStatement pstmt = con.prepareStatement(sql)
+        ) {
             preparedStatementSetter.setValues(pstmt);
 
             rs = pstmt.executeQuery();
@@ -93,9 +93,9 @@ public class JdbcTemplate {
     public void truncate() throws SQLException {
         String sql = "truncate table users";
         try (
-                Connection con = ConnectionManager.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql);
-        ){
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)
+        ) {
             pstmt.executeUpdate();
         }
     }
