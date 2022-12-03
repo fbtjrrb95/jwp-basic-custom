@@ -60,9 +60,15 @@ public class QuestionDao {
         return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 
-    public void delete(Long questionId) throws SQLException {
+    public void delete(long id) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "DELETE FROM Question WHERE id = ?";
-        jdbcTemplate.update(sql, questionId);
+        jdbcTemplate.update(sql, id);
+    }
+
+    public void increaseAnswerCount(long id) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "UPDATE QUESTION SET answerCount = answerCount + 1 WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }

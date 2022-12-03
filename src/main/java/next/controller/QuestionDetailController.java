@@ -17,9 +17,9 @@ public class QuestionDetailController extends AbstractController {
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isDelete(request)) {
             String questionIdString = request.getRequestURI().substring(prefix.length());
-            Long questionId;
+            long questionId;
             try {
-                questionId = Long.valueOf(questionIdString);
+                questionId = Long.parseLong(questionIdString);
             } catch (NumberFormatException e) {
                 throw new NotFoundException("NOT FOUND");
             }
