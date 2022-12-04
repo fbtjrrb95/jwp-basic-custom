@@ -17,7 +17,7 @@
                       <div class="wrap">
                           <div class="main">
                               <strong class="subject">
-                                  <a href="/qna/questions?questionId=${question.id}">${question.title}</a>
+                                  <a href="/qna/questions/${question.id}">${question.title}</a>
                               </strong>
                               <div class="auth-info">
                                   <i class="icon-add-comment"></i>

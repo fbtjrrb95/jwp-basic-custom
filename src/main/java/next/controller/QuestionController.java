@@ -7,7 +7,6 @@ import next.model.Answer;
 import next.model.Question;
 import next.model.User;
 import next.view.ModelAndView;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +16,45 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.function.Function;
 
-// TODO: change QnAController
 public class QuestionController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
+    private final QuestionDao questionDao = new QuestionDao();
+    private final AnswerDao answerDao = new AnswerDao();
+
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        QuestionDao questionDao = new QuestionDao();
-        AnswerDao answerDao = new AnswerDao();
+        if (isDelete(request)) {
+            long questionId;
+            try {
+                questionId = getQuestionIdFromUrl.apply(request.getRequestURI());
+            } catch (NumberFormatException e) {
+                throw new NotFoundException("NOT FOUND");
+            }
+            log.debug("delete question id: {}", questionId);
+            // TODO: delete answers
+            questionDao.delete(questionId);
+            return jsonView();
+        }
+
+        if (isGet(request)) {
+            long questionId;
+            try {
+                questionId = getQuestionIdFromUrl.apply(request.getRequestURI());
+            } catch (NumberFormatException e) {
+                throw new NotFoundException("NOT FOUND");
+            }
+            ModelAndView jspView = jspView("/qna/show.jsp");
+            Question question = questionDao.findById(questionId);
+            jspView.addObject("question", question);
+            if (question != null) {
+                List<Answer> answers = answerDao.findByQuestionId(question.getId());
+                jspView.addObject("answers", answers);
+            }
+            return jspView;
+        }
 
         if (isPost(request)) {
             User user = (User) request.getSession().getAttribute("user");
@@ -45,20 +74,12 @@ public class QuestionController extends AbstractController {
             return jsonView().addObject("question", savedQuestion);
         }
 
-        if (isGet(request)) {
-            String questionId = request.getParameter("questionId");
-            if (StringUtils.isEmpty(questionId)) {
-                throw new NotFoundException("NOT FOUND");
-            }
-            ModelAndView jspView = jspView("/qna/show.jsp");
-            Question question = questionDao.findById(Long.parseLong(questionId));
-            jspView.addObject("question", question);
-            if (question != null) {
-                List<Answer> answers = answerDao.findByQuestionId(question.getId());
-                jspView.addObject("answers", answers);
-            }
-            return jspView;
-        }
         throw new NotFoundException("NOT FOUND");
     }
+
+    private final Function<String, Long> getQuestionIdFromUrl = (url) -> {
+        String prefix = "/qna/questions/";
+        String questionIdString = url.substring(prefix.length());
+        return Long.parseLong(questionIdString);
+    };
 }

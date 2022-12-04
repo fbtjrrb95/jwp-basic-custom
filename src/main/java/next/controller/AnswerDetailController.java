@@ -26,6 +26,7 @@ public class AnswerDetailController extends AbstractController {
             log.debug("delete answer id: {}", answerId);
             AnswerDao answerDao = new AnswerDao();
             answerDao.delete(answerId);
+            // TODO: decrease answerCount of target question
             return jsonView();
         }
         throw new NotFoundException("NOT FOUND");

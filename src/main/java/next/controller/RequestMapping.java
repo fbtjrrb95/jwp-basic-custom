@@ -26,7 +26,6 @@ public class RequestMapping {
         map.put("/qna/answers", new AnswerController());
         map.put("/qna/answers/", new AnswerDetailController());
         map.put("/qna/questions", new QuestionController());
-        map.put("/qna/questions/", new QuestionDetailController());
     }
 
     public Controller getController(String url) {
