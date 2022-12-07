@@ -90,14 +90,4 @@ public class JdbcTemplate {
         return result.get(0);
     }
 
-    public int truncate() throws SQLException {
-        String sql = "TRUNCATE TABLE users";
-        try (
-            Connection con = ConnectionManager.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(sql)
-        ) {
-            return pstmt.executeUpdate();
-        }
-    }
-
 }

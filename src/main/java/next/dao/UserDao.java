@@ -71,7 +71,8 @@ public class UserDao {
 
     public void truncate() throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
-        jdbcTemplate.truncate();
+        String sql = "TRUNCATE TABLE USERS";
+        jdbcTemplate.update(sql);
     }
 
 }
