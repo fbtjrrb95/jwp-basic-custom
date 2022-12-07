@@ -12,17 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcTemplate {
-    public void update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
+    public int update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
         try (
             Connection con = ConnectionManager.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
             preparedStatementSetter.setValues(pstmt);
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         }
     }
 
-    public void update(String sql, Object... parameters) throws SQLException {
+    public int update(String sql, Object... parameters) throws SQLException {
         try (
             Connection con = ConnectionManager.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)
@@ -30,7 +30,7 @@ public class JdbcTemplate {
             for (int i = 0; i < parameters.length; i++) {
                 pstmt.setObject(i + 1, parameters[i]);
             }
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         }
     }
 
@@ -90,13 +90,13 @@ public class JdbcTemplate {
         return result.get(0);
     }
 
-    public void truncate() throws SQLException {
-        String sql = "truncate table users";
+    public int truncate() throws SQLException {
+        String sql = "TRUNCATE TABLE users";
         try (
             Connection con = ConnectionManager.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)
         ) {
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         }
     }
 

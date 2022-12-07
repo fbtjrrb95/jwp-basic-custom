@@ -13,9 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class QuestionController extends AbstractController {
@@ -28,19 +31,21 @@ public class QuestionController extends AbstractController {
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isDelete(request)) {
-            long questionId = QuestionIdParser
-                    .apply(PREFIX)
-                    .apply(request.getRequestURI());
-            log.debug("delete question id: {}", questionId);
-            // TODO: delete answers
-            questionDao.delete(questionId);
+            // todo: delete answers
+            CompletableFuture.supplyAsync(() -> QuestionIdParser.apply(PREFIX, request.getRequestURI()))
+                    .thenAccept(id -> {
+                        try {
+                            questionDao.delete(id);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    })
+                    .get();
             return jsonView();
         }
 
         if (isGet(request)) {
-            long questionId = QuestionIdParser
-                    .apply(PREFIX)
-                    .apply(request.getRequestURI());
+            long questionId = QuestionIdParser.apply(PREFIX, request.getRequestURI());
             ModelAndView jspView = jspView("/qna/show.jsp");
             Question question = questionDao.findById(questionId);
             jspView.addObject("question", question);
@@ -72,7 +77,7 @@ public class QuestionController extends AbstractController {
         throw new NotFoundException("NOT FOUND");
     }
 
-    private final Function<String, Function<String, Long>> QuestionIdParser = prefix -> url -> {
+    private final BiFunction<String, String, Long> QuestionIdParser = (prefix, url) -> {
         String questionIdString = url.substring(prefix.length());
         return Long.parseLong(questionIdString);
     };
