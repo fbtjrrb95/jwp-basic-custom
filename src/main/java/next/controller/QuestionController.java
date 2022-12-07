@@ -23,16 +23,14 @@ public class QuestionController extends AbstractController {
 
     private final QuestionDao questionDao = new QuestionDao();
     private final AnswerDao answerDao = new AnswerDao();
+    private final String PREFIX = "/qna/questions/";
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isDelete(request)) {
-            long questionId;
-            try {
-                questionId = getQuestionIdFromUrl.apply(request.getRequestURI());
-            } catch (NumberFormatException e) {
-                throw new NotFoundException("NOT FOUND");
-            }
+            long questionId = QuestionIdParser
+                    .apply(PREFIX)
+                    .apply(request.getRequestURI());
             log.debug("delete question id: {}", questionId);
             // TODO: delete answers
             questionDao.delete(questionId);
@@ -40,12 +38,9 @@ public class QuestionController extends AbstractController {
         }
 
         if (isGet(request)) {
-            long questionId;
-            try {
-                questionId = getQuestionIdFromUrl.apply(request.getRequestURI());
-            } catch (NumberFormatException e) {
-                throw new NotFoundException("NOT FOUND");
-            }
+            long questionId = QuestionIdParser
+                    .apply(PREFIX)
+                    .apply(request.getRequestURI());
             ModelAndView jspView = jspView("/qna/show.jsp");
             Question question = questionDao.findById(questionId);
             jspView.addObject("question", question);
@@ -77,8 +72,7 @@ public class QuestionController extends AbstractController {
         throw new NotFoundException("NOT FOUND");
     }
 
-    private final Function<String, Long> getQuestionIdFromUrl = (url) -> {
-        String prefix = "/qna/questions/";
+    private final Function<String, Function<String, Long>> QuestionIdParser = prefix -> url -> {
         String questionIdString = url.substring(prefix.length());
         return Long.parseLong(questionIdString);
     };
