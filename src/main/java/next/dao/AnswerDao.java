@@ -6,6 +6,7 @@ import next.model.Answer;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.function.Function;
 
 public class AnswerDao {
 
@@ -60,9 +61,26 @@ public class AnswerDao {
         return jdbcTemplate.query(sql, preparedStatementSetter, rowMapper);
     }
 
-    public void delete(Long answerId) throws SQLException {
+    public void delete(long answerId) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "DELETE FROM Answer WHERE id = ?";
         jdbcTemplate.update(sql, answerId);
     }
+
+    public void deleteByQuestionId(long questionId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "DELETE FROM Answer WHERE questionId = ?";
+        jdbcTemplate.update(sql, questionId);
+    }
+
+    public Function<Long, Void> deleteByQuestionIdFunction= (questionId) -> {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "DELETE FROM Answer WHERE questionId = ?";
+        try {
+            jdbcTemplate.update(sql, questionId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    };
 }

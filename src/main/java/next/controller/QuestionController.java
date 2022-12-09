@@ -19,7 +19,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class QuestionController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
@@ -31,16 +30,27 @@ public class QuestionController extends AbstractController {
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isDelete(request)) {
-            // todo: delete answers
-            CompletableFuture.supplyAsync(() -> QuestionIdParser.apply(PREFIX, request.getRequestURI()))
-                    .thenAccept(id -> {
-                        try {
-                            questionDao.delete(id);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    })
-                    .get();
+            CompletableFuture<Long> future = CompletableFuture.supplyAsync(() -> QuestionIdParser.apply(PREFIX, request.getRequestURI()));
+            Long questionId = future.get();
+
+            CompletableFuture<Void> questionDelete = CompletableFuture.runAsync(() -> {
+                try {
+                    questionDao.delete(questionId);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            CompletableFuture<Void> answerDelete = CompletableFuture.runAsync(() -> {
+                try {
+                    answerDao.deleteByQuestionId(questionId);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            CompletableFuture<Void> completableFuture = CompletableFuture.allOf(questionDelete, answerDelete);
+            completableFuture.get();
             return jsonView();
         }
 
