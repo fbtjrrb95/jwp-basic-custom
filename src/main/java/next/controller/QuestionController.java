@@ -25,37 +25,31 @@ public class QuestionController extends AbstractController {
 
     private final QuestionDao questionDao = new QuestionDao();
     private final AnswerDao answerDao = new AnswerDao();
-    private final String PREFIX = "/qna/questions/";
+    private final String QUESTION_ID_PREFIX = "/qna/questions/";
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (isDelete(request)) {
-            CompletableFuture<Long> future = CompletableFuture.supplyAsync(() -> QuestionIdParser.apply(PREFIX, request.getRequestURI()));
+            CompletableFuture<Long> future = CompletableFuture.supplyAsync(() -> QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI()));
             Long questionId = future.get();
-
-            CompletableFuture<Void> questionDelete = CompletableFuture.runAsync(() -> {
+            CompletableFuture.runAsync(() -> {
                 try {
                     questionDao.delete(questionId);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            });
-
-            CompletableFuture<Void> answerDelete = CompletableFuture.runAsync(() -> {
+            }).thenRun(() -> {
                 try {
                     answerDao.deleteByQuestionId(questionId);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            });
-
-            CompletableFuture<Void> completableFuture = CompletableFuture.allOf(questionDelete, answerDelete);
-            completableFuture.get();
+            }).join();
             return jsonView();
         }
 
         if (isGet(request)) {
-            long questionId = QuestionIdParser.apply(PREFIX, request.getRequestURI());
+            long questionId = QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI());
             ModelAndView jspView = jspView("/qna/show.jsp");
             Question question = questionDao.findById(questionId);
             jspView.addObject("question", question);
