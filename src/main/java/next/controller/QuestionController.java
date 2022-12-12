@@ -1,9 +1,7 @@
 package next.controller;
 
 import javassist.NotFoundException;
-import next.dao.AnswerDao;
 import next.dao.QuestionDao;
-import next.model.Answer;
 import next.model.Question;
 import next.model.User;
 import next.view.ModelAndView;
@@ -15,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.function.BiFunction;
+import java.util.List;
 
 public class QuestionController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
@@ -24,13 +22,11 @@ public class QuestionController extends AbstractController {
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         if (isPost(request)) {
             User user = (User) request.getSession().getAttribute("user");
             if (user == null || StringUtils.isEmpty(user.getUserId())) {
                 throw new IllegalAccessException("unavailable user");
             }
-
             String writer = user.getName();
             String title = request.getParameter("title");
             String contents = request.getParameter("contents");
@@ -41,6 +37,11 @@ public class QuestionController extends AbstractController {
 
             Question savedQuestion = questionDao.save(question);
             return jsonView().addObject("question", savedQuestion);
+        }
+
+        if (isGet(request)) {
+            List<Question> questions = questionDao.findAll();
+            return jsonView().addObject("questions", questions);
         }
 
         throw new NotFoundException("NOT FOUND");
