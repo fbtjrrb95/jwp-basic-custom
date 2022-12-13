@@ -1,6 +1,7 @@
 $(".answerWrite input[type=submit]").click(addAnswer);
 $(".questionWrite input[type=submit]").click(addQuestion);
 $(".question-delete button[type=submit]").click(deleteQuestion);
+$(".question-update button[type=submit]").click(updateQuestion);
 $(".qna-comment").on("click", ".answerDelete", deleteAnswer);
 
 function addAnswer(e) {
@@ -75,6 +76,21 @@ function deleteQuestion(e) {
     },
     success: (json, status) => {
       window.location = "http://localhost:8080/"
+    },
+  })
+}
+
+function updateQuestion(e) {
+  e.preventDefault();
+  const questionId = $(this).closest('div').find('input[name=questionId]').val();
+  $.ajax({
+    type: 'put',
+    url: '/qna/questions/' + questionId,
+    error: (xhr, status) => {
+      alert('error');
+    },
+    success: (json, status) => {
+      console.log('update log');
     },
   })
 }

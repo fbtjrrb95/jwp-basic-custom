@@ -35,7 +35,10 @@
                     <div class="article-util">
                         <ul class="article-util-list">
                             <li>
-                                <a class="link-modify-article" href="#">수정</a>
+                                <div class="question-update">
+                                    <input type="hidden" name="questionId" value="${question.id}">
+                                    <button class="link-update-article" type="submit">수정</button>
+                                </div>
                             </li>
                             <li>
                                 <div class="question-delete">
