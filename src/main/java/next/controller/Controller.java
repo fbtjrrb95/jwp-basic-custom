@@ -22,4 +22,8 @@ public interface Controller {
     default boolean isDelete(HttpServletRequest request) {
         return Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.DELETE);
     }
+
+    default boolean isPut(HttpServletRequest request) {
+        return Method.valueOf(request.getMethod().toUpperCase(Locale.ROOT)).equals(Method.PUT);
+    }
 }
