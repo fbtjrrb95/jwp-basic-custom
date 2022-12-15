@@ -26,6 +26,25 @@ public class QuestionDao {
         return findById(generatedId);
     }
 
+    public Question update(Question question) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String sql = "UPDATE QUESTION SET contents=? WHERE id=?";
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setString(1, question.getContents());
+            preparedStatement.setLong(2, question.getId());
+        };
+        RowMapper<Question> rowMapper = resultSet -> new Question(
+                resultSet.getLong("id"),
+                resultSet.getString("writer"),
+                resultSet.getString("title"),
+                resultSet.getString("contents"),
+                resultSet.getLong("answerCount"),
+                resultSet.getTimestamp("createdAt"),
+                resultSet.getTimestamp("updatedAt")
+        );
+        return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
+    }
+
     public Question findById(long id) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT id, writer, title, contents, answerCount, createdAt, updatedAt FROM Question WHERE id = ?";
