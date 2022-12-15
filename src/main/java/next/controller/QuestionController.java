@@ -32,7 +32,13 @@ public class QuestionController extends AbstractController {
             String contents = request.getParameter("contents");
             Timestamp createdAt = Timestamp.from(Instant.now());
             Timestamp updatedAt = Timestamp.from(Instant.now());
-            Question question = new Question(writer, title, contents, createdAt, updatedAt);
+            Question question = Question.builder()
+                    .contents(contents)
+                    .writer(writer)
+                    .title(title)
+                    .createdAt(createdAt)
+                    .updatedAt(updatedAt)
+                    .build();
             log.debug("question: {}", question);
 
             Question savedQuestion = questionDao.save(question);
