@@ -29,9 +29,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="article-doc">
-                        ${question.contents}
-                    </div>
+                    <input class="article-doc" value="${question.contents}">
                     <div class="article-util">
                         <ul class="article-util-list">
                             <li>

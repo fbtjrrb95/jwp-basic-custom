@@ -82,15 +82,21 @@ function deleteQuestion(e) {
 
 function updateQuestion(e) {
   e.preventDefault();
+  const contents = $('.article-doc').val();
+  const data = {
+    contents,
+  };
   const questionId = $(this).closest('div').find('input[name=questionId]').val();
   $.ajax({
     type: 'put',
     url: '/qna/questions/' + questionId,
+    contentType: 'application/json',
+    data: JSON.stringify(data),
     error: (xhr, status) => {
       alert('error');
     },
     success: (json, status) => {
-      console.log('update log');
+      $('.article-doc').val(json.contents);
     },
   })
 }
