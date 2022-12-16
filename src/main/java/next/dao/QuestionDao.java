@@ -5,7 +5,10 @@ import next.model.Question;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 
 public class QuestionDao {
 
@@ -27,22 +30,22 @@ public class QuestionDao {
     }
 
     public Question update(Question question) throws SQLException {
+        Objects.requireNonNull(question.getWriter());
+        Objects.requireNonNull(question.getTitle());
+        Objects.requireNonNull(question.getContents());
+        Objects.requireNonNull(question.getId());
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "UPDATE QUESTION SET contents=? WHERE id=?";
-        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
-            preparedStatement.setString(1, question.getContents());
-            preparedStatement.setLong(2, question.getId());
-        };
-        RowMapper<Question> rowMapper = resultSet -> new Question(
-                resultSet.getLong("id"),
-                resultSet.getString("writer"),
-                resultSet.getString("title"),
-                resultSet.getString("contents"),
-                resultSet.getLong("answerCount"),
-                resultSet.getTimestamp("createdAt"),
-                resultSet.getTimestamp("updatedAt")
-        );
-        return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
+        String sql = "UPDATE QUESTION SET writer=?, title=?, contents=?, updatedAt=? WHERE id=?";
+        jdbcTemplate.update(
+                sql,
+                question.getWriter(),
+                question.getTitle(),
+                question.getContents(),
+                Timestamp.from(Instant.now()),
+                question.getId());
+
+        return question;
     }
 
     public Question findById(long id) throws SQLException {
