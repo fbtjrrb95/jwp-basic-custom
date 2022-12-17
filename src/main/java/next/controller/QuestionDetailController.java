@@ -1,5 +1,7 @@
 package next.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
 import next.dao.AnswerDao;
 import next.dao.QuestionDao;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 
@@ -54,6 +57,18 @@ public class QuestionDetailController extends AbstractController {
                 jspView.addObject("answers", answers);
             }
             return jspView;
+        }
+
+        if (isPut(request)) {
+            long questionId = QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI());
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, String> map = objectMapper.readValue(
+                    request.getInputStream(),
+                    new TypeReference<Map<String, String>>() {});
+            Question question = questionDao.findById(questionId);
+            question.setContents(map.get("contents"));
+            Question updatedQuestion = questionDao.update(question);
+            return jsonView().addObject("contents", updatedQuestion.getContents());
         }
 
         throw new NotFoundException("NOT FOUND");
