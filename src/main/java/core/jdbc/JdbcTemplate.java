@@ -12,6 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcTemplate {
+    private static JdbcTemplate instance;
+    private JdbcTemplate() {};
+
+    public static JdbcTemplate getInstance() {
+        if (instance == null) {
+            synchronized (JdbcTemplate.class) {
+                instance = new JdbcTemplate();
+            }
+        }
+        return instance;
+    }
+
     public int update(String sql, PreparedStatementSetter preparedStatementSetter) throws SQLException {
         try (
             Connection con = ConnectionManager.getConnection();
