@@ -24,7 +24,6 @@ public class UserDaoTest {
 
         User actual = userDao.findByUserId(expected.getUserId());
         assertEquals(expected, actual);
-
     }
 
     @Test
@@ -58,7 +57,6 @@ public class UserDaoTest {
         assertEquals(users.size(), 2);
         assertEquals(users.get(0).getUserId(), "userId1");
         assertEquals(users.get(1).getUserId(), "userId2");
-
     }
 
     @Test

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserDao {
+
+    private final JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
+
     public void insert(User user) throws SQLException {
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setString(1, user.getUserId());
@@ -14,13 +17,11 @@ public class UserDao {
             preparedStatement.setString(3, user.getName());
             preparedStatement.setString(4, user.getEmail());
         };
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, preparedStatementSetter);
     }
 
     public void insert(String userId, String password, String name, String email) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, userId, password, name, email);
     }
@@ -34,7 +35,6 @@ public class UserDao {
                 resultSet.getString("password"),
                 resultSet.getString("name"),
                 resultSet.getString("email"));
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
         return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
@@ -45,8 +45,6 @@ public class UserDao {
                 resultSet.getString("password"),
                 resultSet.getString("name"),
                 resultSet.getString("email"));
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT userId, password, name, email FROM USERS";
         return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
@@ -58,19 +56,16 @@ public class UserDao {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getUserId());
         };
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
         jdbcTemplate.update(sql, preparedStatementSetter);
     }
 
     public void update(String userId, String email, String password, String name) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "UPDATE USERS SET PASSWORD=?, NAME=?, EMAIL=? WHERE USERID=?";
         jdbcTemplate.update(sql, password, name, email, userId);
     }
 
     public void truncate() throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "TRUNCATE TABLE USERS";
         jdbcTemplate.update(sql);
     }
