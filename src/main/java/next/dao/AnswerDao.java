@@ -6,12 +6,11 @@ import next.model.Answer;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.function.Function;
 
 public class AnswerDao {
+    private final JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
 
     public Answer save(Answer answer) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "INSERT INTO Answer (writer, contents, questionId, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
         PreparedStatementCreator psc = con -> {
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -28,11 +27,8 @@ public class AnswerDao {
     }
 
     public Answer findById(long id) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE id = ?";
-        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
-            preparedStatement.setLong(1, id);
-        };
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> preparedStatement.setLong(1, id);
         RowMapper<Answer> rowMapper = resultSet -> new Answer(
                 resultSet.getLong("id"),
                 resultSet.getString("writer"),
@@ -45,11 +41,8 @@ public class AnswerDao {
     }
 
     public List<Answer> findByQuestionId(long questionId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE questionId = ?";
-        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
-            preparedStatement.setLong(1, questionId);
-        };
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> preparedStatement.setLong(1, questionId);
         RowMapper<Answer> rowMapper = resultSet -> new Answer(
                 resultSet.getLong("id"),
                 resultSet.getString("writer"),
@@ -62,13 +55,11 @@ public class AnswerDao {
     }
 
     public void delete(long answerId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "DELETE FROM Answer WHERE id = ?";
         jdbcTemplate.update(sql, answerId);
     }
 
     public void deleteByQuestionId(long questionId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "DELETE FROM Answer WHERE questionId = ?";
         jdbcTemplate.update(sql, questionId);
     }
