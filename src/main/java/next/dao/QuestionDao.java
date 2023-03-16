@@ -12,8 +12,9 @@ import java.util.Objects;
 
 public class QuestionDao {
 
+    private final JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
+
     public Question save(Question question) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "INSERT INTO QUESTION (writer, title, contents, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
         PreparedStatementCreator psc = con -> {
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -35,7 +36,6 @@ public class QuestionDao {
         Objects.requireNonNull(question.getContents());
         Objects.requireNonNull(question.getId());
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "UPDATE QUESTION SET writer=?, title=?, contents=?, updatedAt=? WHERE id=?";
         jdbcTemplate.update(
                 sql,
@@ -49,11 +49,9 @@ public class QuestionDao {
     }
 
     public Question findById(long id) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT id, writer, title, contents, answerCount, createdAt, updatedAt FROM Question WHERE id = ?";
-        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
-            preparedStatement.setLong(1, id);
-        };
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> preparedStatement.setLong(1, id);
+
         RowMapper<Question> rowMapper = resultSet -> new Question(
                 resultSet.getLong("id"),
                 resultSet.getString("writer"),
@@ -77,19 +75,16 @@ public class QuestionDao {
                 resultSet.getTimestamp("createdAt"),
                 resultSet.getTimestamp("updatedAt"));
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {};
         String sql = "SELECT id, writer, title, contents, answerCount, createdAt, updatedAt FROM QUESTION";
         return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 
     public void delete(long id) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "DELETE FROM Question WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     public void increaseAnswerCount(long id) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "UPDATE QUESTION SET answerCount = answerCount + 1 WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
