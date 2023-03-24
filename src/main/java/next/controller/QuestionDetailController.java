@@ -24,12 +24,13 @@ public class QuestionDetailController extends AbstractController {
 
     private final QuestionDao questionDao = new QuestionDao();
     private final AnswerDao answerDao = new AnswerDao();
-    private final String QUESTION_ID_PREFIX = "/qna/questions/";
+
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String QUESTION_ID_PREFIX = "/qna/questions/";
+        long questionId = QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI());
+
         if (isDelete(request)) {
-            CompletableFuture<Long> future = CompletableFuture.supplyAsync(() -> QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI()));
-            Long questionId = future.get();
             log.debug(String.format("delete question id: %d", questionId));
             CompletableFuture.runAsync(() -> {
                 try {
@@ -48,7 +49,6 @@ public class QuestionDetailController extends AbstractController {
         }
 
         if (isGet(request)) {
-            long questionId = QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI());
             ModelAndView jspView = jspView("/qna/show.jsp");
             Question question = questionDao.findById(questionId);
             jspView.addObject("question", question);
@@ -60,11 +60,10 @@ public class QuestionDetailController extends AbstractController {
         }
 
         if (isPut(request)) {
-            long questionId = QuestionIdParser.apply(QUESTION_ID_PREFIX, request.getRequestURI());
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, String> map = objectMapper.readValue(
                     request.getInputStream(),
-                    new TypeReference<Map<String, String>>() {});
+                    new TypeReference<>() {});
             Question question = questionDao.findById(questionId);
             question.setContents(map.get("contents"));
             Question updatedQuestion = questionDao.update(question);
