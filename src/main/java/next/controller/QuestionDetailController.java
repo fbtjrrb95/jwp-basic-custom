@@ -2,6 +2,7 @@ package next.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.util.ObjectMapperFactory;
 import javassist.NotFoundException;
 import next.dao.AnswerDao;
 import next.dao.QuestionDao;
@@ -60,7 +61,7 @@ public class QuestionDetailController extends AbstractController {
         }
 
         if (isPut(request)) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = ObjectMapperFactory.getInstance();
             Map<String, String> map = objectMapper.readValue(
                     request.getInputStream(),
                     new TypeReference<>() {});
