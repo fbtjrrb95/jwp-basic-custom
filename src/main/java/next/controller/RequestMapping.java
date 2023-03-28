@@ -1,17 +1,14 @@
 package next.controller;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class RequestMapping {
 
     private static final Map<String, Controller> map = new HashMap<>();
+    private static final Map<String, Map<Method, Controller>> controllerMap = new HashMap<>();
 
     void init() {
-        map.put("/", new HomeController());
+        controllerMap.put("/", buildHomeControllerMap());
         map.put("/forms/signup", new ForwardController("/user/form.jsp"));
         map.put("/forms/login", new ForwardController("/user/login.jsp"));
         map.put("/forms/users/update", new ForwardController("/user/update.jsp"));
@@ -29,12 +26,25 @@ public class RequestMapping {
         map.put("/qna/questions/", new QuestionDetailController());
     }
 
-    public Controller getController(String url) {
-        List<String> list = map.keySet().stream()
+    private Map<Method, Controller> buildHomeControllerMap() {
+        Map<Method, Controller> homeControllerMap = new HashMap<>();
+        homeControllerMap.put(Method.GET, new HomeController());
+        return homeControllerMap;
+    }
+
+    public Controller getController(String url, Method method) {
+        return getMappedUrl(map.keySet(), url)
+                .map(map::get)
+                .orElseGet(
+                        () -> getMappedUrl(controllerMap.keySet(), url)
+                                .map(s -> controllerMap.get(s).get(method))
+                                .orElse(null)
+                );
+    }
+
+    private Optional<String> getMappedUrl(Collection<String> keySet, String url) {
+        return keySet.stream()
                 .filter(url::startsWith)
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-        if (list.isEmpty()) return null;
-        return map.get(list.get(0));
+                .max(Comparator.naturalOrder());
     }
 }

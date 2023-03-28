@@ -25,9 +25,10 @@ public class DispatcherServlet extends HttpServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String uri = request.getRequestURI();
-        log.debug("Method : {}, Request URI : {}", request.getMethod(), uri);
+        String method = request.getMethod();
+        log.debug("Method : {}, Request URI : {}", method, uri);
 
-        Controller controller = map.getController(uri);
+        Controller controller = map.getController(uri, Method.valueOf(method));
         ModelAndView modelAndView;
         try {
             modelAndView = controller.execute(request, response);
