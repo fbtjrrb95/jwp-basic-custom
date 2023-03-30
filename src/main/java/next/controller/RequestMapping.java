@@ -9,9 +9,9 @@ public class RequestMapping {
 
     void init() {
         controllerMap.put("/", buildHomeControllerMap());
-        controllerMap.put("/forms/signup", buildForwardController("/user/form.jsp"));
-        map.put("/forms/login", new ForwardController("/user/login.jsp"));
-        map.put("/forms/users/update", new ForwardController("/user/update.jsp"));
+        controllerMap.put("/forms/signup", buildForwardControllerMap("/user/form.jsp"));
+        controllerMap.put("/forms/login", buildForwardControllerMap("/user/login.jsp"));
+        controllerMap.put("/forms/users/update", buildForwardControllerMap("/user/update.jsp"));
         map.put("/forms/qna", new ForwardController("/qna/form.jsp"));
         map.put("/qna", new ForwardController("/qna/show.jsp"));
         map.put("/login", new LoginController());
@@ -32,7 +32,7 @@ public class RequestMapping {
         return homeControllerMap;
     }
 
-    private Map<Method, Controller> buildForwardController(String jspPath) {
+    private Map<Method, Controller> buildForwardControllerMap(String jspPath) {
         Map<Method, Controller> forwardControllerMap = new HashMap<>();
         forwardControllerMap.put(Method.GET, new ForwardController(jspPath));
         return forwardControllerMap;
