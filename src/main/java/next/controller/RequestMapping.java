@@ -13,7 +13,7 @@ public class RequestMapping {
         controllerMap.put("/forms/login", buildForwardControllerMap("/user/login.jsp"));
         controllerMap.put("/forms/users/update", buildForwardControllerMap("/user/update.jsp"));
         controllerMap.put("/forms/qna", buildForwardControllerMap("/qna/form.jsp"));
-        map.put("/qna", new ForwardController("/qna/show.jsp"));
+        controllerMap.put("/qna", buildForwardControllerMap("/qna/show.jsp"));
         map.put("/login", new LoginController());
         map.put("/logout", new LogoutController());
         map.put("/users", new ListUserController());
