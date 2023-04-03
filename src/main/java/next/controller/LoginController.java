@@ -2,9 +2,7 @@ package next.controller;
 
 import next.dao.UserDao;
 import next.model.User;
-import next.view.JspView;
 import next.view.ModelAndView;
-import next.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
