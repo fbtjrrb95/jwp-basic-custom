@@ -1,5 +1,7 @@
 package next.controller;
 
+import core.exception.NotFoundException;
+
 import java.util.*;
 
 public class RequestMapping {
@@ -50,7 +52,7 @@ public class RequestMapping {
                 .orElseGet(
                         () -> getMappedUrl(controllerMap.keySet(), url)
                                 .map(s -> controllerMap.get(s).get(method))
-                                .orElse(null)
+                                .orElseThrow(NotFoundException::new)
                 );
     }
 

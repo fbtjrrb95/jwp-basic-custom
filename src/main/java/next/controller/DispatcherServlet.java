@@ -1,5 +1,6 @@
 package next.controller;
 
+import core.exception.NotFoundException;
 import next.view.ModelAndView;
 import next.view.View;
 import org.slf4j.Logger;
@@ -28,14 +29,15 @@ public class DispatcherServlet extends HttpServlet {
         String method = request.getMethod();
         log.debug("Method : {}, Request URI : {}", method, uri);
 
-        Controller controller = map.getController(uri, Method.valueOf(method));
-        ModelAndView modelAndView;
         try {
-            modelAndView = controller.execute(request, response);
+            Controller controller = map.getController(uri, Method.valueOf(method));
+            ModelAndView modelAndView = controller.execute(request, response);
             View view = modelAndView.getView();
             view.render(modelAndView.getModel(), request, response);
         } catch (IllegalAccessException e) {
             response.setStatus(403);
+        } catch (NotFoundException e) {
+            response.setStatus(e.status);
         } catch (Exception e) {
             log.error("Exception : {}", e.toString());
             throw new ServletException(e.getMessage());
