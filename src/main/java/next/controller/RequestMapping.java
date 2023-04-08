@@ -18,7 +18,7 @@ public class RequestMapping {
         controllerMap.put("/qna", buildForwardControllerMap("/qna/show.jsp"));
         controllerMap.put("/login", buildLoginControllerMap());
         controllerMap.put("/logout", buildLogoutControllerMap());
-        map.put("/users", new ListUserController());
+        controllerMap.put("/users", buildListUserControllerMap());
         map.put("/users/create", new CreateUserController());
         map.put("/users/update", new UpdateUserController());
         map.put("/users/profile", new ProfileController());
@@ -26,6 +26,12 @@ public class RequestMapping {
         map.put("/qna/answers/", new AnswerDetailController());
         map.put("/qna/questions", new QuestionController());
         map.put("/qna/questions/", new QuestionDetailController());
+    }
+
+    private Map<Method, Controller> buildListUserControllerMap() {
+        Map<Method, Controller> listUserControllerMap = new HashMap<>();
+        listUserControllerMap.put(Method.GET, new ListUserController());
+        return listUserControllerMap;
     }
 
     private Map<Method, Controller> buildLogoutControllerMap() {
