@@ -11,7 +11,7 @@
 <div class="container" id="main">
    <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/users/update">
+          <div class="user-update">
               <div class="form-group">
                   <label for="userId">사용자 아이디</label>
                   <input class="form-control" id="userId" name="userId" placeholder="User ID">
@@ -30,7 +30,7 @@
               </div>
               <button type="submit" class="btn btn-success clearfix pull-right">개인정보수정</button>
               <div class="clearfix" />
-          </form>
+          </div>
         </div>
     </div>
 </div>

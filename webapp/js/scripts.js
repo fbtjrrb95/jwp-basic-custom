@@ -3,6 +3,7 @@ $(".questionWrite input[type=submit]").click(addQuestion);
 $(".question-delete button[type=submit]").click(deleteQuestion);
 $(".question-update button[type=submit]").click(updateQuestion);
 $(".qna-comment").on("click", ".answerDelete", deleteAnswer);
+$(".user-update button[type=submit]").click(updateUser);
 
 function addAnswer(e) {
   e.preventDefault();
@@ -97,6 +98,34 @@ function updateQuestion(e) {
     },
     success: (json, status) => {
       $('.article-doc').val(json.contents);
+    },
+  })
+}
+
+function updateUser(e) {
+  e.preventDefault();
+  const userId = $('#userId').val();
+  const password = $('#password').val();
+  const name = $('#name').val();
+  const email = $('#email').val();
+
+  const data = {
+    userId,
+    password,
+    name,
+    email
+  };
+
+  $.ajax({
+    type: 'put',
+    url: '/users',
+    contentType: 'application/json',
+    data: JSON.stringify(data),
+    error: (xhr, status) => {
+      alert('error');
+    },
+    success: (json, status) => {
+      window.location = "http://localhost:8080/users"
     },
   })
 }
