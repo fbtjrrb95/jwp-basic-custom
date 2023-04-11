@@ -112,3 +112,4 @@ public class ShowQuestionController extends AbstractController {
 ```
 > 변수 선언할 때의 스코프는 최대한 적게 가져가는 것을 습관으로 하자!
 
+* script.js 에서 새로운 페이지를 띄우기 위해 window.location 을 새로 지정하면 호출했던 api 응답이 resource identifier not found 뜨면서 확인할 수 없다.
