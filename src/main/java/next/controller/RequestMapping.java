@@ -20,10 +20,16 @@ public class RequestMapping {
         controllerMap.put("/logout", buildLogoutControllerMap());
         controllerMap.put("/users", buildUserControllerMap());
         controllerMap.put("/users/profile", buildProfileControllerMap());
-        map.put("/qna/answers", new AnswerController());
+        controllerMap.put("/qna/answers", buildAnswerControllerMap());
         map.put("/qna/answers/", new AnswerDetailController());
         map.put("/qna/questions", new QuestionController());
         map.put("/qna/questions/", new QuestionDetailController());
+    }
+
+    private Map<Method, Controller> buildAnswerControllerMap() {
+        Map<Method, Controller> answerControllerMap = new HashMap<>();
+        answerControllerMap.put(Method.POST, new AnswerController());
+        return answerControllerMap;
     }
 
     private Map<Method, Controller> buildProfileControllerMap() {

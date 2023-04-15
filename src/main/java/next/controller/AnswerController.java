@@ -1,6 +1,5 @@
 package next.controller;
 
-import javassist.NotFoundException;
 import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
@@ -20,27 +19,25 @@ public class AnswerController extends AbstractController {
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (isPost(request)) {
-            User user = (User) request.getSession().getAttribute("user");
-            if (user == null || StringUtils.isEmpty(user.getUserId())) {
-                throw new IllegalAccessException("unavailable user");
-            }
 
-            String writer = user.getName();
-            String contents = request.getParameter("contents");
-            long questionId = Long.parseLong(request.getParameter("questionId"));
-            Timestamp createdAt = Timestamp.from(Instant.now());
-            Timestamp updatedAt = Timestamp.from(Instant.now());
-            Answer answer = new Answer(writer, contents, questionId, createdAt, updatedAt);
-            log.debug("answer: {}", answer);
-
-            AnswerDao answerDao = new AnswerDao();
-            QuestionDao questionDao = new QuestionDao();
-            Answer savedAnswer = answerDao.save(answer);
-            questionDao.increaseAnswerCount(questionId);
-            return jsonView().addObject("answer", savedAnswer);
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null || StringUtils.isEmpty(user.getUserId())) {
+            throw new IllegalAccessException("unavailable user");
         }
 
-        throw new NotFoundException("NOT FOUND");
+        String writer = user.getName();
+        String contents = request.getParameter("contents");
+        long questionId = Long.parseLong(request.getParameter("questionId"));
+        Timestamp createdAt = Timestamp.from(Instant.now());
+        Timestamp updatedAt = Timestamp.from(Instant.now());
+        Answer answer = new Answer(writer, contents, questionId, createdAt, updatedAt);
+        log.debug("answer: {}", answer);
+
+        AnswerDao answerDao = new AnswerDao();
+        QuestionDao questionDao = new QuestionDao();
+        Answer savedAnswer = answerDao.save(answer);
+        questionDao.increaseAnswerCount(questionId);
+
+        return jsonView().addObject("answer", savedAnswer);
     }
 }
