@@ -21,13 +21,21 @@ public class RequestMapping {
         controllerMap.put("/users", buildUserControllerMap());
         controllerMap.put("/users/profile", buildProfileControllerMap());
         controllerMap.put("/qna/answers", buildAnswerControllerMap());
-        map.put("/qna/answers/", new AnswerDetailController());
+        controllerMap.put("/qna/answers/", buildAnswerDetailControlelrMap());
         map.put("/qna/questions", new QuestionController());
         map.put("/qna/questions/", new QuestionDetailController());
     }
 
+    private Map<Method, Controller> buildAnswerDetailControlelrMap() {
+        Map<Method, Controller> answerDetailMap = new HashMap<>();
+        // TODO: change controller name delete controller
+        answerDetailMap.put(Method.DELETE, new AnswerDetailController());
+        return answerDetailMap;
+    }
+
     private Map<Method, Controller> buildAnswerControllerMap() {
         Map<Method, Controller> answerControllerMap = new HashMap<>();
+        // TODO: change controller name post controller
         answerControllerMap.put(Method.POST, new AnswerController());
         return answerControllerMap;
     }

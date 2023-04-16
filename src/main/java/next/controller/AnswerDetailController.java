@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AnswerDetailController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(AnswerDetailController.class);
-    private final String prefix = "/qna/answers/";
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (isDelete(request)) {
-            String answerIdString = request.getRequestURI().substring(prefix.length());
-            Long answerId;
+        String prefix = "/qna/answers/";
+        String answerIdString = request.getRequestURI().substring(prefix.length());
+            long answerId;
             try {
-                answerId = Long.valueOf(answerIdString);
+                answerId = Long.parseLong(answerIdString);
             } catch (NumberFormatException e) {
+                // TODO: change custom exception which extends runtime exception
                 throw new NotFoundException("NOT FOUND");
             }
             log.debug("delete answer id: {}", answerId);
@@ -28,7 +28,5 @@ public class AnswerDetailController extends AbstractController {
             answerDao.delete(answerId);
             // TODO: decrease answerCount of target question
             return jsonView();
-        }
-        throw new NotFoundException("NOT FOUND");
     }
 }
