@@ -22,9 +22,18 @@ public class RequestMapping {
         controllerMap.put("/users/profile", buildProfileControllerMap());
         controllerMap.put("/qna/answers", buildAnswerControllerMap());
         controllerMap.put("/qna/answers/", buildAnswerDetailControlelrMap());
-        map.put("/qna/questions", new QuestionController());
+        controllerMap.put("/qna/questions", buildQuestionControlelrMap());
         map.put("/qna/questions/", new QuestionDetailController());
     }
+
+    private Map<Method, Controller> buildQuestionControlelrMap() {
+        Map<Method, Controller> questionMap = new HashMap<>();
+        // TODO: change controller name post controller
+        questionMap.put(Method.POST, new QuestionController());
+        return questionMap;
+    }
+
+
 
     private Map<Method, Controller> buildAnswerDetailControlelrMap() {
         Map<Method, Controller> answerDetailMap = new HashMap<>();
