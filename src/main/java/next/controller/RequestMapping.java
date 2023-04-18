@@ -28,12 +28,10 @@ public class RequestMapping {
 
     private Map<Method, Controller> buildQuestionControlelrMap() {
         Map<Method, Controller> questionMap = new HashMap<>();
-        // TODO: change controller name post controller
-        questionMap.put(Method.POST, new QuestionController());
+        questionMap.put(Method.POST, new UpdateQuestionController());
+        questionMap.put(Method.GET, new GetQuestionController());
         return questionMap;
     }
-
-
 
     private Map<Method, Controller> buildAnswerDetailControlelrMap() {
         Map<Method, Controller> answerDetailMap = new HashMap<>();
