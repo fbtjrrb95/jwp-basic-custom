@@ -29,6 +29,7 @@ public class RequestMapping {
     private Map<Method, Controller> buildQuestionDetailControllerMap() {
         Map<Method, Controller> questionDetailMap = new HashMap<>();
         questionDetailMap.put(Method.GET, new GetQuestionController());
+        questionDetailMap.put(Method.DELETE, new DeleteQuestionController());
 
         return questionDetailMap;
     }
