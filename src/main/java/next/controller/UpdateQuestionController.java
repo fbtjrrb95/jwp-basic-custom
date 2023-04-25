@@ -1,47 +1,32 @@
 package next.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import core.util.ObjectMapperFactory;
 import next.dao.QuestionDao;
 import next.model.Question;
-import next.model.User;
 import next.view.ModelAndView;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.Map;
 
-public class UpdateQuestionController extends AbstractController {
-    private static final Logger log = LoggerFactory.getLogger(UpdateQuestionController.class);
+public class UpdateQuestionController extends QuestionDetailController {
+    private final ObjectMapper objectMapper = ObjectMapperFactory.getInstance();
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        long questionId = QuestionIdParser.apply("/qna/questions/", request.getRequestURI());
 
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null || StringUtils.isEmpty(user.getUserId())) {
-            throw new IllegalAccessException("unavailable user");
-        }
-
-        String writer = user.getName();
-        String title = request.getParameter("title");
-        String contents = request.getParameter("contents");
-        Timestamp createdAt = Timestamp.from(Instant.now());
-        Timestamp updatedAt = Timestamp.from(Instant.now());
-        Question question = Question.builder()
-                .contents(contents)
-                .writer(writer)
-                .title(title)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
-                .build();
-
-        log.debug("question: {}", question);
+        Map<String, String> map = objectMapper.readValue(
+                request.getInputStream(),
+                new TypeReference<>() {});
 
         QuestionDao questionDao = new QuestionDao();
-        Question savedQuestion = questionDao.save(question);
+        Question question = questionDao.findById(questionId);
+        question.setContents(map.get("contents"));
+        Question updatedQuestion = questionDao.update(question);
 
-        return jsonView().addObject("question", savedQuestion);
+        return jsonView().addObject("contents", updatedQuestion.getContents());
     }
 }
