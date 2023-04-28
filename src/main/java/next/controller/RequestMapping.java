@@ -52,14 +52,14 @@ public class RequestMapping {
 
     private Map<Method, Controller> buildAnswerControllerMap() {
         Map<Method, Controller> answerControllerMap = new HashMap<>();
-        // TODO: change controller name post controller
-        answerControllerMap.put(Method.POST, new AnswerController());
+        answerControllerMap.put(Method.POST, new CreateAnswerController());
         return answerControllerMap;
     }
 
     private Map<Method, Controller> buildProfileControllerMap() {
         Map<Method, Controller> profileControllerMap = new HashMap<>();
         profileControllerMap.put(Method.GET, new ProfileController());
+
         return profileControllerMap;
     }
 
@@ -68,30 +68,35 @@ public class RequestMapping {
         userControllerMap.put(Method.GET, new ListUserController());
         userControllerMap.put(Method.PUT, new UpdateUserController());
         userControllerMap.put(Method.POST, new CreateUserController());
+
         return userControllerMap;
     }
 
     private Map<Method, Controller> buildLogoutControllerMap() {
         Map<Method, Controller> loginControllerMap = new HashMap<>();
         loginControllerMap.put(Method.GET, new LogoutController());
+
         return loginControllerMap;
     }
 
     private Map<Method, Controller> buildLoginControllerMap() {
         Map<Method, Controller> loginControllerMap = new HashMap<>();
         loginControllerMap.put(Method.POST, new LoginController());
+
         return loginControllerMap;
     }
 
     private Map<Method, Controller> buildHomeControllerMap() {
         Map<Method, Controller> homeControllerMap = new HashMap<>();
         homeControllerMap.put(Method.GET, new HomeController());
+
         return homeControllerMap;
     }
 
     private Map<Method, Controller> buildForwardControllerMap(String jspPath) {
         Map<Method, Controller> forwardControllerMap = new HashMap<>();
         forwardControllerMap.put(Method.GET, new ForwardController(jspPath));
+
         return forwardControllerMap;
     }
 

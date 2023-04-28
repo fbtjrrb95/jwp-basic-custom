@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-public class AnswerController extends AbstractController {
-    private static final Logger log = LoggerFactory.getLogger(AnswerController.class);
+public class CreateAnswerController extends AbstractController {
+    private static final Logger log = LoggerFactory.getLogger(CreateAnswerController.class);
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
