@@ -45,8 +45,7 @@ public class RequestMapping {
 
     private Map<Method, Controller> buildAnswerDetailControlelrMap() {
         Map<Method, Controller> answerDetailMap = new HashMap<>();
-        // TODO: change controller name delete controller
-        answerDetailMap.put(Method.DELETE, new AnswerDetailController());
+        answerDetailMap.put(Method.DELETE, new DeleteAnswerController());
         return answerDetailMap;
     }
 

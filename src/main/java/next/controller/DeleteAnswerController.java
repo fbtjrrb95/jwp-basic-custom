@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AnswerDetailController extends AbstractController {
-    private static final Logger log = LoggerFactory.getLogger(AnswerDetailController.class);
+public class DeleteAnswerController extends AbstractController {
+    private static final Logger log = LoggerFactory.getLogger(DeleteAnswerController.class);
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
