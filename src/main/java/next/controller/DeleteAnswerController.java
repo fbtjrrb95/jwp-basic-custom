@@ -1,6 +1,6 @@
 package next.controller;
 
-import javassist.NotFoundException;
+import core.exception.NotFoundException;
 import next.dao.AnswerDao;
 import next.view.ModelAndView;
 import org.slf4j.Logger;
@@ -20,7 +20,6 @@ public class DeleteAnswerController extends AbstractController {
             try {
                 answerId = Long.parseLong(answerIdString);
             } catch (NumberFormatException e) {
-                // TODO: change custom exception which extends runtime exception
                 throw new NotFoundException("NOT FOUND");
             }
             log.debug("delete answer id: {}", answerId);
