@@ -1,10 +1,17 @@
 package core.exception;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 public class NotFoundException extends RuntimeException {
 
     public int status = 404;
-    public final String message;
+
+    public String message = "Not Found";
+
+    public NotFoundException() {
+        super();
+    }
+
+    public NotFoundException(String message) {
+        super(message);
+        this.message = message;
+    }
 }
