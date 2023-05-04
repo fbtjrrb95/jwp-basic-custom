@@ -88,4 +88,9 @@ public class QuestionDao {
         String sql = "UPDATE QUESTION SET answerCount = answerCount + 1 WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    public void decreaseAnswerCount(long id) throws SQLException {
+        String sql = "UPDATE QUESTION SET answerCount = answerCount - 1 WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
