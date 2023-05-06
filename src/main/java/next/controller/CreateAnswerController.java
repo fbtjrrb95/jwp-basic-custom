@@ -1,9 +1,9 @@
 package next.controller;
 
 import next.dao.AnswerDao;
-import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.User;
+import next.service.QuestionService;
 import next.view.ModelAndView;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,6 +16,8 @@ import java.time.Instant;
 
 public class CreateAnswerController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(CreateAnswerController.class);
+
+    private final QuestionService questionService = new QuestionService();
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -34,9 +36,9 @@ public class CreateAnswerController extends AbstractController {
         log.debug("answer: {}", answer);
 
         AnswerDao answerDao = new AnswerDao();
-        QuestionDao questionDao = new QuestionDao();
         Answer savedAnswer = answerDao.save(answer);
-        questionDao.increaseAnswerCount(questionId);
+
+        questionService.increaseAnswerCount(questionId);
 
         return jsonView().addObject("answer", savedAnswer);
     }
