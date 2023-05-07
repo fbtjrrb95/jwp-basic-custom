@@ -29,28 +29,28 @@ public class AnswerDao {
     public Answer findById(long id) throws SQLException {
         String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE id = ?";
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> preparedStatement.setLong(1, id);
-        RowMapper<Answer> rowMapper = resultSet -> new Answer(
-                resultSet.getLong("id"),
-                resultSet.getString("writer"),
-                resultSet.getString("contents"),
-                resultSet.getLong("questionId"),
-                resultSet.getTimestamp("createdAt"),
-                resultSet.getTimestamp("updatedAt")
-        );
+        RowMapper<Answer> rowMapper = resultSet -> Answer.builder()
+                .id(resultSet.getLong("id"))
+                .writer(resultSet.getString("writer"))
+                .contents(resultSet.getString("contents"))
+                .questionId(resultSet.getLong("questionId"))
+                .createdAt(resultSet.getTimestamp("createdAt"))
+                .updatedAt(resultSet.getTimestamp("updatedAt"))
+                .build();
         return jdbcTemplate.queryForObject(sql, preparedStatementSetter, rowMapper);
     }
 
     public List<Answer> findByQuestionId(long questionId) throws SQLException {
         String sql = "SELECT id, writer, contents, questionId, createdAt, updatedAt FROM Answer WHERE questionId = ?";
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> preparedStatement.setLong(1, questionId);
-        RowMapper<Answer> rowMapper = resultSet -> new Answer(
-                resultSet.getLong("id"),
-                resultSet.getString("writer"),
-                resultSet.getString("contents"),
-                resultSet.getLong("questionId"),
-                resultSet.getTimestamp("createdAt"),
-                resultSet.getTimestamp("updatedAt")
-        );
+        RowMapper<Answer> rowMapper = resultSet -> Answer.builder()
+                .id(resultSet.getLong("id"))
+                .writer(resultSet.getString("writer"))
+                .contents(resultSet.getString("contents"))
+                .questionId(resultSet.getLong("questionId"))
+                .createdAt(resultSet.getTimestamp("createdAt"))
+                .updatedAt(resultSet.getTimestamp("updatedAt"))
+                .build();
         return jdbcTemplate.query(sql, preparedStatementSetter, rowMapper);
     }
 

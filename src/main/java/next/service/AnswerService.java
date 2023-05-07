@@ -19,4 +19,15 @@ public class AnswerService {
             throw new RuntimeException(e);
         }
     }
+
+    public Answer create(Answer answer) {
+        try {
+            Answer savedAnswer = answerDao.save(answer);
+            long questionId = savedAnswer.getQuestionId();
+            questionService.increaseAnswerCount(questionId);
+            return savedAnswer;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
