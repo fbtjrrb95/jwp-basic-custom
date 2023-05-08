@@ -18,15 +18,20 @@ public class DeleteAnswerController extends AbstractController {
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String prefix = "/qna/answers/";
         String answerIdString = request.getRequestURI().substring(prefix.length());
-            long answerId;
-            try {
-                answerId = Long.parseLong(answerIdString);
-            } catch (NumberFormatException e) {
-                throw new NotFoundException("NOT FOUND");
-            }
-            log.debug("delete answer id: {}", answerId);
-            answerService.delete(answerId);
+        long answerId = obtainAnswerId(answerIdString);
+        log.debug("delete answer id: {}", answerId);
+        answerService.delete(answerId);
 
-            return jsonView();
+        return jsonView();
+    }
+
+    private long obtainAnswerId(String answerIdString) {
+        long answerId;
+        try {
+            answerId = Long.parseLong(answerIdString);
+        } catch (NumberFormatException e) {
+            throw new NotFoundException("NOT FOUND");
+        }
+        return answerId;
     }
 }
