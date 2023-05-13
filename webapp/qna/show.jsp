@@ -72,10 +72,13 @@
                                     <div class="article-util">
                                         <ul class="article-util-list">
                                             <li>
-                                                <a class="link-modify-article" href="/api/qna/updateAnswer?answerId=${each.id}">수정</a>
+                                                <div class="answer-update">
+                                                    <input type="hidden" name="answerId" value="${each.id}" />
+                                                    <button type="submit" class="link-delete-article">수정</button>
+                                                </div>
                                             </li>
                                             <li>
-                                                <div class="answerDelete">
+                                                <div class="answer-delete">
                                                     <input type="hidden" name="answerId" value="${each.id}" />
                                                     <button type="submit" class="link-delete-article">삭제</button>
                                                 </div>
