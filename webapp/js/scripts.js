@@ -2,7 +2,9 @@ $(".answerWrite input[type=submit]").click(addAnswer);
 $(".questionWrite input[type=submit]").click(addQuestion);
 $(".question-delete button[type=submit]").click(deleteQuestion);
 $(".question-update button[type=submit]").click(updateQuestion);
-$(".qna-comment").on("click", ".answerDelete", deleteAnswer);
+$(".answer-update input[type=submit]").click(addAnswer);
+$(".qna-comment").on("click", ".answer-delete", deleteAnswer);
+$(".qna-comment").on("click", ".answer-update", deleteAnswer);
 $(".user-update button[type=submit]").click(updateUser);
 $(".user-create button[type=submit]").click(createUser);
 
@@ -102,6 +104,24 @@ function updateQuestion(e) {
     },
   })
 }
+
+function updateAnswer(e) {
+  e.preventDefault();
+  const answerId = $(this).closest('div').find('input[name=answerId]').val();
+  $.ajax({
+    type: 'put',
+    url: '/qna/answers/' + answerId,
+    contentType: 'application/json',
+    data: JSON.stringify(data),
+    error: (xhr, status) => {
+      alert('error');
+    },
+    success: (json, status) => {
+      $('.article-doc').val(json.contents);
+    },
+  })
+}
+
 
 function createUser(e) {
   e.preventDefault();
